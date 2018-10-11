@@ -172,6 +172,10 @@ public class Juego {
 		return jugador.getGrafico().getWidth();
 	}
 	
+	public void addEntidad(Entidad e) {
+		entidades.add(e);
+	}
+	
 	//METODOS PROVISORIOS
 	public void generarDisparo() {
 		Disparo d= jugador.crearDisparo();
@@ -192,7 +196,8 @@ public class Juego {
 
 	public void eliminarDisparos() {
 		for(int i=0;i<disparos.size();i++) {
-			if(disparos.get(i).getVida()<=0) {
+			if(disparos.get(i).getVida()<=0||disparos.get(i).getPos().getY()<0) {
+				entidades.remove(disparos.get(i));
 				disparos.get(i).destruir();
 				disparos.remove(i);
 			}
@@ -221,4 +226,16 @@ public class Juego {
 	public void Update() {
 		jugador.Update();
 	}
+	
+	public void manage() {
+		if(entidades.size()==1&&jugador.getVida()>0) {
+			PrimerBoss boss=null;
+			boss = PrimerBoss.getPrimerBoss(10,200,200);
+			entidades.add(boss);
+			miGui.add(boss.getGrafico());
+			
+		}
+	}
+
+	
 }

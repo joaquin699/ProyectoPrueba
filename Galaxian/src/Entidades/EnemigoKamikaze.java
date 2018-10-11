@@ -1,6 +1,9 @@
 package Entidades;
 
 import Principal.*;
+
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 
 import Colisionadores.Colision;
@@ -9,6 +12,8 @@ import Inteligencias.*;
 
 public class EnemigoKamikaze extends Enemigo{
 	
+	private boolean cambieInteligencia;
+	
 	public EnemigoKamikaze(int velocidad,int x, int y, Juego j) {
 		super(velocidad,x,y);
 		
@@ -16,9 +21,11 @@ public class EnemigoKamikaze extends Enemigo{
 		
 		this.juego= j;
 		
+		this.cambieInteligencia = false;
+		
 		inicializarArregloImg();
 		this.setPuntaje(300);
-		this.setInteligencia(new InteligenciaKamikaze(this,j));
+		this.setInteligencia(new InteligenciaEnemigo(this));
 	}
 	
 	private void inicializarArregloImg() {
@@ -26,7 +33,13 @@ public class EnemigoKamikaze extends Enemigo{
 	}
 	
 	public void mover() {
+		Random r = new Random();
+		if(!cambieInteligencia&&r.nextInt(60)==5) {
+		this.setInteligencia(new InteligenciaKamikaze(this,this.juego));
+			cambieInteligencia=true;
+		}
 		this.inteligencia.mover();
+		
 	}
 	
 	//METODOS PROVISORIOS
