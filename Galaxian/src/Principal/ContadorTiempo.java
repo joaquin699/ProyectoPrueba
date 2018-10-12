@@ -2,13 +2,14 @@ package Principal;
 
 public class ContadorTiempo extends Thread{
 	private Juego elJuego;
-	
-	ContadorTiempo(Juego j){
+	public ContadorTiempo(Juego j){
 		this.elJuego= j;
 	}
 	
 	public void run() {
 		while(true) {
+			//elJuego.accionarDisparos();
+
 			try {
 				Thread.sleep(100);
 			}
@@ -18,8 +19,13 @@ public class ContadorTiempo extends Thread{
 			elJuego.mover();
 			elJuego.detectarColisiones();
 			elJuego.eliminarEntidades();
+			///////ESTA LINEA TIRA ERROR//////////
+			elJuego.accionarDisparos();
+			////////////////////////////////////			
 			elJuego.manage();
 			elJuego.actualizarLabels();
+			
+			
 		}
 	}
 }

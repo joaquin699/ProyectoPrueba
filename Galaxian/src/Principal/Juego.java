@@ -53,6 +53,7 @@ public class Juego {
 		moverDerecha=true;
 	}
 	
+	
 	public int getAnchoGui() {
 		return miGui.getWidth();
 	}
@@ -69,7 +70,23 @@ public class Juego {
 		}
 	}
 		
+	public void accionarDisparos() {
+		for(Entidad e: entidades) {
+			e.disparar();
+		}
+	}
 	
+	public GUI getGUI() {
+		return miGui;
+	}
+	
+	public void addDisparoEnemigo(DisparoEnemigo d) {
+		miGui.add(d.getGrafico());
+
+		entidades.add(d);
+		disparos.add(d);
+
+	}
 	
 	public Jugador getJugador() {
 		return jugador;
@@ -239,7 +256,6 @@ public class Juego {
 				entidades.add(boss);
 				miGui.add(boss.getGrafico());
 			}
-			
 		}
 	}
 	

@@ -20,4 +20,5 @@ public class TiempoDisparo extends Thread  {
 			System.out.println(elJuego.getListaEntidades().size());
 		}
 	}
+	
 }

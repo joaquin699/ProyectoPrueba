@@ -91,6 +91,8 @@ public abstract class Entidad {
 		
 	}
 	
+	public void disparar() {}
+	
 	public Point getPos() {
 		return pos;
 	}
