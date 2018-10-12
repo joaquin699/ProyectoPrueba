@@ -1,6 +1,5 @@
 package Entidades;
 
-import Principal.*;
 
 import java.util.Random;
 
@@ -14,12 +13,10 @@ public class EnemigoKamikaze extends Enemigo{
 	
 	private boolean cambieInteligencia;
 	
-	public EnemigoKamikaze(int velocidad,int x, int y, Juego j) {
+	public EnemigoKamikaze(int velocidad,int x, int y) {
 		super(velocidad,x,y);
 		
 		this.vida= 200;
-		
-		this.juego= j;
 		
 		this.cambieInteligencia = false;
 		

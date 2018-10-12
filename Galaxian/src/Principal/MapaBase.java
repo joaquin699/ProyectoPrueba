@@ -9,22 +9,23 @@ public class MapaBase extends Mapa {
 		this.enemigos= new LinkedList<Enemigo>();
 		this.obstaculos= new LinkedList<Obstaculo>();
 		int x= 0;
-		int y= 0;
-		/**
-		for(int i=0;i<3;i++){
-			y+= 60;
-			for(int h=0;h<3;h++) {
-				x+=60;
-				enemigos.add(new EnemigoBase(7,x,y));
-			}
-			x=0;
-		}
-		y+=60;
-		**/
+		int y= 50;
+		
+/*		for(int i=0;i<5;i++){
+			EnemigoBase enem= new EnemigoBase(7,x,y);
+			enem.setJuego(j);
+			enemigos.add(enem);
+			x+= 50;
+			y+=50;
+			
+		}*/
 		for(int p=0;p<3;p++) {
-			x+=60;
-			enemigos.add(new EnemigoKamikaze(7,x,y,j));
-		}
+			EnemigoKamikaze enemigo= new EnemigoKamikaze(9,x,y);
+			enemigo.setJuego(j);
+			enemigos.add(enemigo);
+			x+= 70;
+		}	
+		
 		
 		
 		

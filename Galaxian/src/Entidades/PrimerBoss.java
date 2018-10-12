@@ -10,7 +10,7 @@ public class PrimerBoss extends Enemigo {
 	
 	private static int primerBoss;
 	
-	private PrimerBoss(int velocidad,int x, int y) {
+	public PrimerBoss(int velocidad,int x, int y) {
 		super(velocidad,x,y);
 		this.vida= 100;
 		
