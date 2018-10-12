@@ -231,8 +231,10 @@ public class Juego {
 		if(entidades.size()==1&&jugador.getVida()>0) {
 			PrimerBoss boss=null;
 			boss = PrimerBoss.getPrimerBoss(10,200,200);
-			entidades.add(boss);
-			miGui.add(boss.getGrafico());
+			if(boss!=null) {
+				entidades.add(boss);
+				miGui.add(boss.getGrafico());
+			}
 			
 		}
 	}

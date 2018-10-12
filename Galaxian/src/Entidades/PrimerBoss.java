@@ -8,7 +8,7 @@ import Inteligencias.InteligenciaEnemigo;
 
 public class PrimerBoss extends Enemigo {
 	
-	private static PrimerBoss primerBoss;
+	private static int primerBoss;
 	
 	private PrimerBoss(int velocidad,int x, int y) {
 		super(velocidad,x,y);
@@ -20,11 +20,12 @@ public class PrimerBoss extends Enemigo {
 	}
 	
 	public static PrimerBoss getPrimerBoss(int velo,int x,int y) {
-		if(primerBoss==null) {
-			primerBoss= new PrimerBoss(velo,x,y);
-			return primerBoss;
+		PrimerBoss primer =null;
+		if(primerBoss==0) {
+			primer= new PrimerBoss(velo,x,y);
+			primerBoss++;
 		}
-		return primerBoss;
+		return primer;
 
 	}
 	
