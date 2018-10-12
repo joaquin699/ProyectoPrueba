@@ -21,6 +21,8 @@ public class Juego {
  	private LinkedList<Entidad> entidadesAEliminar;
  	private LinkedList<Entidad> disparos;
  	private int puntajeTotal;
+ 	
+ 	private boolean moverDerecha,cambioDireccion;
 	
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
@@ -46,26 +48,28 @@ public class Juego {
 			entidades.add(o);
 			miGui.add(o.getGrafico());
 		}
+		
+		cambioDireccion= false;
+		moverDerecha=true;
 	}
 	
-	public void mover(int dir) {
-		int direccion=-1;
-		switch(dir) {
-		case KeyEvent.VK_LEFT:
-			direccion=0;
-			break;
-		case KeyEvent.VK_RIGHT:
-			direccion=1;
-			break;
-		}
-		jugador.mover(direccion);
+	public int getAnchoGui() {
+		return miGui.getWidth();
 	}
 
 	public void mover() {
 		for(int i=0;i<entidades.size();i++) {
 			entidades.get(i).mover();
 		}
+		if(cambioDireccion) {
+			moverDerecha=false;
+		}
+		else {
+			moverDerecha= true;
+		}
 	}
+		
+	
 	
 	public Jugador getJugador() {
 		return jugador;
@@ -235,6 +239,18 @@ public class Juego {
 			miGui.add(boss.getGrafico());
 			
 		}
+	}
+	
+	public void setCambiarDireccion(boolean dir) {
+		cambioDireccion= dir;
+	}
+	
+	public boolean moverDerecha() {
+		return moverDerecha;
+	}
+	
+	public boolean cambioDireccion() {
+		return cambioDireccion;
 	}
 
 	
