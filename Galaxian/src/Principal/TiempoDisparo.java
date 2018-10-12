@@ -17,7 +17,6 @@ public class TiempoDisparo extends Thread  {
 			}
 			elJuego.moverDisparo();
 			elJuego.eliminarDisparos();
-			System.out.println(elJuego.getListaEntidades().size());
 		}
 	}
 }

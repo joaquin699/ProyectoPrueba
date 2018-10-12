@@ -10,21 +10,23 @@ public class PrimerBoss extends Enemigo {
 	
 	private static PrimerBoss primerBoss;
 	
-	public PrimerBoss(int velocidad,int x, int y) {
+	private PrimerBoss(int velocidad,int x, int y) {
 		super(velocidad,x,y);
 		this.vida= 100;
-		
 		inicializarArregloImg();
 		this.setPuntaje(7);
 		this.setInteligencia(new InteligenciaEnemigo(this));
 	}
-	
+
 	public static PrimerBoss getPrimerBoss(int velo,int x,int y) {
 		if(primerBoss==null) {
 			primerBoss= new PrimerBoss(velo,x,y);
 			return primerBoss;
 		}
-		return primerBoss;
+		else {
+			return null;
+		}
+		
 
 	}
 	
