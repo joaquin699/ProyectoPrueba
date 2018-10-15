@@ -18,10 +18,13 @@ public class Juego {
 	private Jugador jugador;
  	private LinkedList<Entidad> entidades;
  	private LinkedList<Entidad> entidadesAEliminar;
- 	private LinkedList<Entidad> disparos;
+ 	private LinkedList<Disparo> disparos;
  	private int puntajeTotal;
  	
  	private boolean moverDerecha,cambioDireccion;
+ 	
+ 	//Atributos Provisorios
+ 	private LinkedList<Disparo> disparosParaAgregar;
 	
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
@@ -29,7 +32,7 @@ public class Juego {
 		miGui = gui;
 		entidades = new LinkedList<Entidad>();
 		entidadesAEliminar = new LinkedList<Entidad>();
-		disparos= new LinkedList<Entidad>();
+		disparos= new LinkedList<Disparo>();
 		
 		this.jugador=new Jugador(265,610);
 		miGui.add(jugador.getGrafico());
@@ -50,6 +53,8 @@ public class Juego {
 		
 		cambioDireccion= false;
 		moverDerecha=true;
+		
+		disparosParaAgregar= new LinkedList<Disparo>();
 	}
 	
 	public int getAnchoGui() {
@@ -187,13 +192,13 @@ public class Juego {
 		disparos.add(d);
 	}
 	
-	public LinkedList<Entidad> getListaDisparos(){
+	public LinkedList<Disparo> getListaDisparos(){
 		return disparos;
 	}
 	
 	public void moverDisparo() {
-		for(int i=0;i<disparos.size();i++) {
-			disparos.get(i).mover();
+		for(Disparo d : disparos) {
+			d.mover();
 		}
 	}
 
@@ -219,13 +224,12 @@ public class Juego {
         if(miGui.space.isKeyDown()) {
         	Disparo d= jugador.crearDisparo();
     		if(d!=null) {
-    			miGui.add(d.getGrafico());
-    			entidades.add(d);
-    			disparos.add(d);
+    			disparosParaAgregar.add(d);
     		}
         }
         	
 	}
+	
 	public void Update() {
 		jugador.Update();
 	}
@@ -253,6 +257,29 @@ public class Juego {
 	public boolean cambioDireccion() {
 		return cambioDireccion;
 	}
+	
+	public void accionarDisparos() {
+		for(Entidad e: entidades) {
+			e.disparar();
+		}
+	}
+	
+	public GUI getGUI() {
+		return miGui;
+	}
 
+	public void addDisparoEnemigo(DisparoEnemigo d) {
+		disparosParaAgregar.add(d);
+	}
+	
+	public void agregarDisparos() {
+		for(Disparo d : disparosParaAgregar) {
+			entidades.add(d);
+			disparos.add(d);
+			miGui.add(d.getGrafico());
+			
+			disparosParaAgregar.remove(d);
+		}
+	}
 	
 }

@@ -11,20 +11,20 @@ public class MapaBase extends Mapa {
 		int x= 0;
 		int y= 50;
 		
-/*		for(int i=0;i<5;i++){
+		for(int i=0;i<2;i++){
 			EnemigoBase enem= new EnemigoBase(7,x,y);
 			enem.setJuego(j);
 			enemigos.add(enem);
-			x+= 50;
+			x+= 100;
 			y+=50;
 			
-		}*/
-		for(int p=0;p<3;p++) {
+		}
+		/*for(int p=0;p<3;p++) {
 			EnemigoKamikaze enemigo= new EnemigoKamikaze(9,x,y);
 			enemigo.setJuego(j);
 			enemigos.add(enemigo);
 			x+= 70;
-		}	
+		}	*/
 		
 		
 		
