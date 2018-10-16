@@ -19,7 +19,7 @@ public class ContadorTiempo extends Thread{
 			elJuego.detectarColisiones();
 			elJuego.eliminarEntidades();
 			elJuego.accionarDisparos();
-			elJuego.manage();
+			//elJuego.manage();
 			elJuego.actualizarLabels();
 			elJuego.agregarDisparos();
 		}
