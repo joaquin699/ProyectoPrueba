@@ -11,13 +11,14 @@ import Inteligencias.*;
 
 public class EnemigoKamikaze extends Enemigo{
 	
+	private int damage;
 	private boolean cambieInteligencia;
 	
 	public EnemigoKamikaze(int velocidad,int x, int y) {
 		super(velocidad,x,y);
 		
 		this.vida= 200;
-		
+		damage=80;
 		this.cambieInteligencia = false;
 		
 		inicializarArregloImg();
@@ -47,6 +48,16 @@ public class EnemigoKamikaze extends Enemigo{
 	public void colisionar(Entidad e) {
 		ColisionadorEnemigo col= new ColisionadorEnemigo(this);
 		e.serColisionado(col);
+	}
+	
+	public void golpearJugador(Jugador j) {
+		j.quitarVida(damage);
+		this.vida=-1;
+	}
+	
+	public void golpearObstaculo(Obstaculo o) {
+		o.quitarVida(this.damage);
+		this.vida=-1;
 	}
 }
 

@@ -2,13 +2,15 @@ package Principal;
 
 public class TiempoJugador extends Thread {
 	private Juego elJuego;
+	private boolean seguir;
 		
 		TiempoJugador(Juego j){
 			this.elJuego= j;
+			seguir=true;
 		}
 		
 		public void run() {
-			while(true) {
+			while(seguir) {
 				try {
 					Thread.sleep(30);
 				}
@@ -17,6 +19,8 @@ public class TiempoJugador extends Thread {
 				}
 				elJuego.moverJugador();
 				elJuego.Update();
-			}
+				seguir=elJuego.jugadorVivo();
+			}			
+			elJuego.terminarJuego();
 		}
 }

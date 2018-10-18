@@ -1,10 +1,11 @@
 package Principal;
 
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import java.awt.Rectangle;
 
@@ -15,29 +16,31 @@ public class Juego {
 	//ATRIBUTOS
 	private GUI miGui;
 	private Mapa mapa;
+	
 	private Jugador jugador;
+	
  	private LinkedList<Entidad> entidades;
  	private LinkedList<Entidad> entidadesAEliminar;
  	private LinkedList<Disparo> disparos;
+ 	private LinkedList<Disparo> disparosParaAgregar;
+ 	
  	private int puntajeTotal;
  	
  	private boolean moverDerecha,cambioDireccion;
- 	
- 	//Atributos Provisorios
- 	private LinkedList<Disparo> disparosParaAgregar;
 	
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
 		this.mapa=new MapaBase(this);	//Pongo Mapa base para probar
 		miGui = gui;
+		
 		entidades = new LinkedList<Entidad>();
 		entidadesAEliminar = new LinkedList<Entidad>();
 		disparos= new LinkedList<Disparo>();
+		disparosParaAgregar= new LinkedList<Disparo>();
 		
 		this.jugador=new Jugador(265,610);
 		miGui.add(jugador.getGrafico());
 		entidades.add(jugador);
-		
 		
 		LinkedList<Enemigo> enem= mapa.getEnemigos();
 		
@@ -46,15 +49,13 @@ public class Juego {
 			miGui.add(e.getGrafico());
 		}
 		
-		for(Obstaculo o: mapa.getObstaculos()) {
+		for(Entidad o: mapa.getObstaculos()) {
 			entidades.add(o);
 			miGui.add(o.getGrafico());
 		}
 		
 		cambioDireccion= false;
 		moverDerecha=true;
-		
-		disparosParaAgregar= new LinkedList<Disparo>();
 	}
 	
 	public int getAnchoGui() {
@@ -62,8 +63,10 @@ public class Juego {
 	}
 
 	public void mover() {
-		for(int i=0;i<entidades.size();i++) {
-			entidades.get(i).mover();
+		synchronized(entidades) {
+			for(int i=1;i<entidades.size();i++) {
+				entidades.get(i).mover();
+			}
 		}
 		if(cambioDireccion) {
 			moverDerecha=false;
@@ -73,54 +76,47 @@ public class Juego {
 		}
 	}
 		
-	
-	
 	public Jugador getJugador() {
 		return jugador;
 	}
 	
 	public void detectarColisiones() {
 		for(int i=0;i<entidades.size();i++) {
-			Rectangle r1 = entidades.get(i).getRectangle();
-			for(int j=i+1;j<entidades.size();j++) {
-				Rectangle r2= entidades.get(j).getRectangle();
-				if(r1.intersects(r2)){
-					entidades.get(i).colisionar(entidades.get(j));
-					if(entidades.get(i).getVida()<=0) {
-						entidadesAEliminar.add(entidades.get(i));
-						puntajeTotal+= entidades.get(i).getPuntaje();
-					}
-					if(entidades.get(j).getVida()<=0) {
-						entidadesAEliminar.add(entidades.get(j));
-						puntajeTotal+= entidades.get(j).getPuntaje();
+			if(entidades.get(i)!=null) {
+				Rectangle r1 = entidades.get(i).getRectangle();
+				for(int j=i+1;j<entidades.size();j++) {
+					if(entidades.get(j).getGrafico()!=null) {
+						Rectangle r2= entidades.get(j).getRectangle();
+		 				if(r1.intersects(r2)){
+							entidades.get(i).colisionar(entidades.get(j));
+							if(entidades.get(i).getVida()<=0) {
+								entidadesAEliminar.add(entidades.get(i)); 
+ 								puntajeTotal+= entidades.get(i).getPuntaje();
+							}
+							if(entidades.get(j).getVida()<=0) {
+								entidadesAEliminar.add(entidades.get(j));
+								puntajeTotal+= entidades.get(j).getPuntaje();
+							}
+						}
 					}
 				}
 			}
 		}
-	}
-	
-	public LinkedList<Entidad> getListaEntidades(){
-		return entidades;
-	}
-	
-	public LinkedList<Entidad> getListaEntidadesAEliminar(){
-		return entidadesAEliminar;
 	}
 	
 	public void eliminarEntidades() {
-		try {
-			Entidad elemento;
-			if(!(entidades.isEmpty()&&entidadesAEliminar.isEmpty())){
-				for(int i=0;i<entidadesAEliminar.size();i++) {
-					elemento= entidadesAEliminar.get(i);
-					entidades.remove(elemento);
-					elemento.destruir();
-					entidadesAEliminar.remove(elemento);
+		Entidad elemento;
+		synchronized(entidades) {
+			synchronized(entidadesAEliminar) {
+				if(!(entidades.isEmpty()&&entidadesAEliminar.isEmpty())){
+					for(int i=0;i<entidadesAEliminar.size();i++) {
+						elemento= entidadesAEliminar.get(i);
+						entidades.remove(elemento);
+						elemento.destruir();
+						entidadesAEliminar.remove(elemento);
+					}
 				}
 			}
-		}
-		catch(NoSuchElementException e) {
-			System.out.println("eliminarEntidades >> No hay mas entidades para eliminar");
 		}
 	}
 	
@@ -169,6 +165,8 @@ public class Juego {
 			}
 			aux/=10;
 		}
+		JLabel vida = miGui.getLabelVida();
+		vida.setText("VIDA: "+jugador.getVida());
 		
 	}
 	
@@ -185,29 +183,25 @@ public class Juego {
 	}
 	
 	//METODOS PROVISORIOS
-	public void generarDisparo() {
-		Disparo d= jugador.crearDisparo();
-		miGui.add(d.getGrafico());
-		entidades.add(d);
-		disparos.add(d);
-	}
-	
-	public LinkedList<Disparo> getListaDisparos(){
-		return disparos;
-	}
 	
 	public void moverDisparo() {
-		for(Disparo d : disparos) {
-			d.mover();
+		synchronized(disparos) {
+			for(Disparo d : disparos) {
+				d.mover();
+			}
 		}
 	}
 
 	public void eliminarDisparos() {
-		for(int i=0;i<disparos.size();i++) {
-			if(disparos.get(i).getVida()<=0||disparos.get(i).getPos().getY()<0) {
-				entidades.remove(disparos.get(i));
-				disparos.get(i).destruir();
-				disparos.remove(i);
+		synchronized(entidades) {
+			synchronized(disparos) {
+				for(int i=0;i<disparos.size();i++) {
+					if(disparos.get(i).getVida()<=0) {
+						entidades.remove(disparos.get(i));
+						disparos.get(i).destruir();
+						disparos.remove(i);
+					}
+				}
 			}
 		}
 	}
@@ -224,7 +218,7 @@ public class Juego {
         if(miGui.space.isKeyDown()) {
         	Disparo d= jugador.crearDisparo();
     		if(d!=null) {
-    			disparosParaAgregar.add(d);
+    			this.addDisparo(d);
     		}
         }
         	
@@ -259,27 +253,64 @@ public class Juego {
 	}
 	
 	public void accionarDisparos() {
-		for(Entidad e: entidades) {
-			e.disparar();
+		synchronized(entidades) {
+			for(Entidad e: entidades) {
+				e.disparar();
+			}
 		}
-	}
-	
-	public GUI getGUI() {
-		return miGui;
 	}
 
-	public void addDisparoEnemigo(DisparoEnemigo d) {
-		disparosParaAgregar.add(d);
+	public void addDisparo(Disparo d) {
+		synchronized(disparosParaAgregar) {
+			disparosParaAgregar.addLast(d);
+		}
 	}
 	
-	public void agregarDisparos() {
-		for(Disparo d : disparosParaAgregar) {
-			entidades.add(d);
-			disparos.add(d);
-			miGui.add(d.getGrafico());
-			
-			disparosParaAgregar.remove(d);
+	public synchronized void agregarDisparos() {
+		Disparo d;
+		synchronized(entidades) {
+			synchronized(disparos) {
+				if(disparosParaAgregar.size()>0) {			
+					for(int i=0;i<disparosParaAgregar.size();i++) {
+						d= disparosParaAgregar.get(i);
+						entidades.add(d);
+						disparos.addLast(d);
+						miGui.add(d.getGrafico());
+						disparosParaAgregar.remove(d); 
+					}
+				}
+			}
 		}
+	}
+	
+	public boolean jugadorVivo() {
+		return jugador.getVida()>0;
+	}
+
+
+	public void terminarJuego() {
+		JLabel partidaTerminada= new JLabel("La partida termino",JLabel.CENTER);
+		JPanel panel= new JPanel(new BorderLayout());
+		panel.setBounds(0, 0, miGui.getWidth(), miGui.getHeight());
+		panel.setBackground(Color.RED);  
+		panel.add(partidaTerminada,BorderLayout.CENTER);
+		
+		//Destruyo el jugador
+		entidades.get(0).destruir();
+		entidades.removeFirst();
+		//
+		miGui.add(panel);
+	}
+	
+	
+	public LinkedList<Entidad>getListaEntidades(){
+		synchronized(entidades) {
+			return entidades;
+		}
+	}
+	
+	public LinkedList<Disparo> getListaDisparos(){
+		return disparos;
 	}
 	
 }

@@ -2,13 +2,15 @@ package Principal;
 
 public class ContadorTiempo extends Thread{
 	private Juego elJuego;
+	private boolean seguir;
 	
 	ContadorTiempo(Juego j){
 		this.elJuego= j;
+		seguir=true;
 	}
 	
 	public void run() {
-		while(true) {
+		while(seguir) {
 			try {
 				Thread.sleep(100);
 			}
@@ -19,9 +21,11 @@ public class ContadorTiempo extends Thread{
 			elJuego.detectarColisiones();
 			elJuego.eliminarEntidades();
 			elJuego.accionarDisparos();
-			//elJuego.manage();
-			elJuego.actualizarLabels();
 			elJuego.agregarDisparos();
+			elJuego.manage();
+			elJuego.actualizarLabels();
+			seguir=elJuego.jugadorVivo();
 		}
+		elJuego.terminarJuego();
 	}
 }
