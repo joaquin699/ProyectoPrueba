@@ -31,6 +31,7 @@ public class PowerUpTiempo extends PowerUp {
 	public void afectar() {
 		HiloDetieneTiempo hilo = new HiloDetieneTiempo(this.juego);
 		hilo.start();	
+		this.vida=-1;
 	}
 
 	@Override

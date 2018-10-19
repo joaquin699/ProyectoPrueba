@@ -1,5 +1,7 @@
 package Entidades;
 
+import Colisionadores.ColisionadorEnemigo;
+import Inteligencias.Inteligencia;
 import Principal.Juego;
 
 public abstract class Enemigo extends Entidad {
@@ -24,6 +26,16 @@ public abstract class Enemigo extends Entidad {
 	}
 	
 	public void golpearJugador(Jugador j) {
-		
+	
 	}
+	
+	public void serDetenido(Inteligencia i) {
+		ColisionadorEnemigo col= new ColisionadorEnemigo(this);
+		col.cambiarInteligencia(i);
+	}
+	
+	public Arma getArma() {
+		return null;
+	}
+	
 }

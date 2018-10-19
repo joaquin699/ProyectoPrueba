@@ -23,7 +23,7 @@ public class EnemigoKamikaze extends Enemigo{
 		
 		inicializarArregloImg();
 		this.setPuntaje(300);
-		this.setInteligencia(new InteligenciaEnemigo(this));
+		this.setInteligencia(new InteligenciaEnemigoConArma(this));
 	}
 	
 	private void inicializarArregloImg() {

@@ -304,9 +304,7 @@ public class Juego {
 	
 	
 	public LinkedList<Entidad>getListaEntidades(){
-		synchronized(entidades) {
-			return entidades;
-		}
+		return entidades;
 	}
 	
 	public LinkedList<Disparo> getListaDisparos(){
