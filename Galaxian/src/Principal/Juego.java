@@ -16,6 +16,7 @@ public class Juego {
 	//ATRIBUTOS
 	private GUI miGui;
 	private Mapa mapa;
+	private boolean pasoBoss;
 	
 	private Jugador jugador;
 	
@@ -56,6 +57,8 @@ public class Juego {
 		
 		cambioDireccion= false;
 		moverDerecha=true;
+		
+		pasoBoss=false;
 	}
 	
 	public int getAnchoGui() {
@@ -229,13 +232,14 @@ public class Juego {
 	}
 	
 	public void manage() {
-		if(entidades.size()== 1&& jugador.getVida()>0) {
+		if(entidades.size()== 1 && jugador.getVida()>0) {
 			PrimerBoss boss=null;
 			boss = PrimerBoss.getPrimerBoss(10,200,200);
 			if(boss!=null) {
 				boss.setJuego(this);
 				entidades.add(boss);
 				miGui.add(boss.getGrafico());
+				pasoBoss=true;
 			}
 		}
 	}
@@ -288,19 +292,42 @@ public class Juego {
 	}
 
 
+	public boolean hayEnemigos() {
+		boolean toReturn=false;
+		if(entidades.size()>1) {
+			toReturn=true;
+		}
+		else {
+			if(!pasoBoss) {
+				return true;
+			}
+		}
+		return toReturn;
+	}
+	
 	public void terminarJuego() {
-		JLabel partidaTerminada= new JLabel("La partida termino",JLabel.CENTER);
+		Font fuente= new Font("Arial",Font.BOLD,40);
+		JLabel partidaTerminada= new JLabel("LA PARTIDA TERMINO",JLabel.CENTER);
+		partidaTerminada.setFont(fuente);
+		partidaTerminada.setForeground(Color.WHITE);
+		
 		JPanel panel= new JPanel(new BorderLayout());
 		panel.setBounds(0, 0, miGui.getWidth(), miGui.getHeight());
-		panel.setBackground(Color.RED);  
+		
+		panel.setBackground(Color.BLACK);  
 		panel.add(partidaTerminada,BorderLayout.CENTER);
 		
-		//Destruyo el jugador
-		entidades.get(0).destruir();
-		entidades.removeFirst();
-		//
-		miGui.add(panel);
+		
+		miGui.destruir();
+		if(jugador.getVida()>0) {
+			partidaTerminada.setText("GANASTE");
+		}
+		else {
+			partidaTerminada.setText("PERDISTE");
+		}
+		miGui.setContentPane(panel);
 	}
+	
 	
 	
 	public LinkedList<Entidad>getListaEntidades(){

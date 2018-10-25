@@ -11,14 +11,19 @@ public class MapaBase extends Mapa {
 		int x= 50;
 		int y= 50;
 		
-		obstaculos.add(new PowerUpEscudo(7,300,200,j));
+		/*EnemigoPierdeArma enem= new EnemigoPierdeArma(7,x,y);
+		enem.setJuego(j);
+		enemigos.add(enem);*/
+		obstaculos.add(new PowerUpMisil(7, x, y, j));
+	
 	 	for(int i=0;i<5;i++){
 			EnemigoBase enem= new EnemigoBase(7,x,y);
 			enem.setJuego(j);
+			enem.setJuego(j);
 			enemigos.add(enem);
 			x+= 70;
 		}
-	 	/*x=100;
+	 	x=100;
 	 	y+=100;
 		for(int i=0;i<5;i++){
 			EnemigoBase enem= new EnemigoBase(7,x,y);
@@ -26,15 +31,15 @@ public class MapaBase extends Mapa {
 			enemigos.add(enem);
 			x+= 70;
 		}
-		x=50;
+		/*x=50;
 	 	y+=100;
 		for(int i=0;i<5;i++){
 			EnemigoBase enem= new EnemigoBase(7,x,y);
 			enem.setJuego(j);
 			enemigos.add(enem);
 			x+= 70;
-		}*/
-		/*for(int p=0;p<3;p++) {
+		}
+		for(int p=0;p<3;p++) {
 			EnemigoKamikaze enemigo= new EnemigoKamikaze(9,x,y);
 			enemigo.setJuego(j);
 			enemigos.add(enemigo);
@@ -47,3 +52,4 @@ public class MapaBase extends Mapa {
 		//obstaculos.add(new ObstaculoBasico (x,y));
 	}
 }
+

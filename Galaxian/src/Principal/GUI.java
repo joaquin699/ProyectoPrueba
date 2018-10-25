@@ -61,8 +61,8 @@ public class GUI extends JFrame {
 		getContentPane().setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 20, 600, 700);
-        setResizable(false);
         panel= new JPanel();
+        setResizable(false);
         
         setContentPane(panel);
         panel.setBackground(Color.BLACK);
@@ -113,6 +113,11 @@ public class GUI extends JFrame {
 	
 	public JLabel getLabelVida() {
 		return labelVida;
+	}
+
+	public void destruir() {
+		panel.removeAll();
+		this.repaint();
 	}
 }
 	

@@ -9,6 +9,14 @@ public abstract class Disparo extends Entidad{
 		vida= 10;	
 	}
 	
+	
+	public void mover() {
+		this.inteligencia.mover();
+		if(this.pos.getY()<-5) {
+			this.vida=-1;
+		}
+	}
+	
 	public void golpearJugador(Jugador j) {
 		
 	}
@@ -16,5 +24,10 @@ public abstract class Disparo extends Entidad{
 	public void golpearEnemigo(Enemigo enem) {
 		
 	}
+	public void golpearObstaculoEnemigoYJugador(Obstaculo o) {
 		
+	}
+	public void golpearObstaculoJugador(Obstaculo o) {
+		
+	}	
 }

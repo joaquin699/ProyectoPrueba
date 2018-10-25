@@ -3,11 +3,11 @@ package Entidades;
 import javax.swing.ImageIcon;
 
 import Colisionadores.Colision;
-import Colisionadores.ColisionadorObstaculo;
+import Colisionadores.ColisionadorObstaculoRompeJugador;
 
-public class ObstaculoBasico extends Obstaculo{
+public class ObstaculoRompeJugador extends Obstaculo{
 	
-	public ObstaculoBasico(int x, int y) {
+	public ObstaculoRompeJugador(int x, int y) {
 		super(x,y);
 		inicializarArregloImg();
 		
@@ -24,7 +24,7 @@ public class ObstaculoBasico extends Obstaculo{
 }
 
 	public void colisionar(Entidad e) {
-		ColisionadorObstaculo col= new ColisionadorObstaculo(this);
+		ColisionadorObstaculoRompeJugador col= new ColisionadorObstaculoRompeJugador(this);
 		e.serColisionado(col);
 	}
 	

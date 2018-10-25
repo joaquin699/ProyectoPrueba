@@ -6,17 +6,16 @@ import Colisionadores.Colision;
 import Colisionadores.ColisionadorDisparo;
 import Inteligencias.InteligenciaDisparoJugador;
 
-public class DisparoJugador extends Disparo{
-	
-	public DisparoJugador(int velocidad,int x,int y) {
+public class DisparoMisil extends Disparo {
+	public DisparoMisil(int velocidad,int x,int y) {
 		super(velocidad,x,y);
-		this.damage= 20;
+		this.damage= 100;
 		this.setInteligencia(new InteligenciaDisparoJugador(this));
 		inicializarArregloImg();
 	}
 	
 	private void inicializarArregloImg() {
-		this.imagen[0]= new ImageIcon(this.getClass().getResource("/img/disparoBasico.png"));
+		this.imagen[0]= new ImageIcon(this.getClass().getResource("/img/misil.gif"));
 	}	
 	public void mover() {
 		this.inteligencia.mover();
@@ -45,5 +44,4 @@ public class DisparoJugador extends Disparo{
 	public void golpearObstaculoJugador(Obstaculo o) {
 		o.quitarVida(20);
 	}
-	
 }
