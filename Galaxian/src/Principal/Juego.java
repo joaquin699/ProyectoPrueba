@@ -92,14 +92,14 @@ public class Juego {
 						Rectangle r2= entidades.get(j).getRectangle();
 		 				if(r1.intersects(r2)){
 							entidades.get(i).colisionar(entidades.get(j));
-							if(entidades.get(i).getVida()<=0) {
-								entidadesAEliminar.add(entidades.get(i)); 
- 								puntajeTotal+= entidades.get(i).getPuntaje();
-							}
-							if(entidades.get(j).getVida()<=0) {
-								entidadesAEliminar.add(entidades.get(j));
-								puntajeTotal+= entidades.get(j).getPuntaje();
-							}
+						}
+		 				if(entidades.get(i).getVida()<=0) {
+							entidadesAEliminar.add(entidades.get(i)); 
+								puntajeTotal+= entidades.get(i).getPuntaje();
+						}
+						if(entidades.get(j).getVida()<=0) {
+							entidadesAEliminar.add(entidades.get(j));
+							puntajeTotal+= entidades.get(j).getPuntaje();
 						}
 					}
 				}

@@ -84,6 +84,7 @@ public abstract class Entidad {
 	
 	public void destruir() {
 		grafico.setIcon(null);
+		
 		vida=-1;
 		
 	}

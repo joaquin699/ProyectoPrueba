@@ -21,7 +21,7 @@ public class DisparoJugador extends Disparo{
 	public void mover() {
 		this.inteligencia.mover();
 		if(this.pos.getY()<-5) {
-			this.vida=-1;
+			this.vida= -1;
 		}
 	}
 	
