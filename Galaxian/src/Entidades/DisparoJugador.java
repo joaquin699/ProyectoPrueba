@@ -10,7 +10,7 @@ public class DisparoJugador extends Disparo{
 	
 	public DisparoJugador(int velocidad,int x,int y) {
 		super(velocidad,x,y);
-		this.damage= 20;
+		this.damage= 50;
 		this.setInteligencia(new InteligenciaDisparoJugador(this));
 		inicializarArregloImg();
 	}
@@ -21,7 +21,7 @@ public class DisparoJugador extends Disparo{
 	public void mover() {
 		this.inteligencia.mover();
 		if(this.pos.getY()<-5) {
-			this.vida= -1;
+			this.vida=-1;
 		}
 	}
 	
@@ -40,10 +40,12 @@ public class DisparoJugador extends Disparo{
 	}
 	
 	public void golpearObstaculoEnemigoYJugador(Obstaculo o) {
-		o.quitarVida(20);
+		vida=0; 
+		o.quitarVida(damage);
 	}
 	public void golpearObstaculoJugador(Obstaculo o) {
-		o.quitarVida(20);
+		vida=0;
+		o.quitarVida(damage);
 	}
 	
 }

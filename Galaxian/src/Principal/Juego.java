@@ -15,8 +15,8 @@ import java.awt.*;
 public class Juego {
 	//ATRIBUTOS
 	private GUI miGui;
-	private Mapa mapa;
-	private boolean pasoBoss;
+	private Mapa  [] mapa;
+	
 	
 	private Jugador jugador;
 	
@@ -26,12 +26,18 @@ public class Juego {
  	private LinkedList<Disparo> disparosParaAgregar;
  	
  	private int puntajeTotal;
+ 	private int nivelActual;
  	
  	private boolean moverDerecha,cambioDireccion;
-	
+ 	private boolean pasoBoss;
+ 	private boolean cambiandoNivel,terminarJuego=false;
+ 	
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
-		this.mapa=new MapaBase(this);	//Pongo Mapa base para probar
+		this.mapa=new Mapa[4];
+		mapa[0]= new MapaBase(this);
+		mapa[1]= new MapaNivel2(this);
+	
 		miGui = gui;
 		
 		entidades = new LinkedList<Entidad>();
@@ -43,22 +49,26 @@ public class Juego {
 		miGui.add(jugador.getGrafico());
 		entidades.add(jugador);
 		
-		LinkedList<Enemigo> enem= mapa.getEnemigos();
-		
-		for(Enemigo e: enem) {
+		armarNivel(1);
+		nivelActual=1;
+				
+		cambioDireccion= false;
+		moverDerecha=true;
+		pasoBoss=false;
+		cambiandoNivel=false;
+	}
+	
+	private void armarNivel(int nivel) {
+		nivel--;
+		for(Enemigo e: mapa[nivel].getEnemigos()) {
 			entidades.add(e);
 			miGui.add(e.getGrafico());
 		}
 		
-		for(Entidad o: mapa.getObstaculos()) {
+		for(Entidad o: mapa[nivel].getObstaculos()) {
 			entidades.add(o);
 			miGui.add(o.getGrafico());
 		}
-		
-		cambioDireccion= false;
-		moverDerecha=true;
-		
-		pasoBoss=false;
 	}
 	
 	public int getAnchoGui() {
@@ -84,22 +94,25 @@ public class Juego {
 	}
 	
 	public void detectarColisiones() {
-		for(int i=0;i<entidades.size();i++) {
-			if(entidades.get(i)!=null) {
-				Rectangle r1 = entidades.get(i).getRectangle();
-				for(int j=i+1;j<entidades.size();j++) {
-					if(entidades.get(j).getGrafico()!=null) {
-						Rectangle r2= entidades.get(j).getRectangle();
-		 				if(r1.intersects(r2)){
-							entidades.get(i).colisionar(entidades.get(j));
-						}
-		 				if(entidades.get(i).getVida()<=0) {
-							entidadesAEliminar.add(entidades.get(i)); 
-								puntajeTotal+= entidades.get(i).getPuntaje();
-						}
-						if(entidades.get(j).getVida()<=0) {
-							entidadesAEliminar.add(entidades.get(j));
-							puntajeTotal+= entidades.get(j).getPuntaje();
+		synchronized(entidades) {
+			for(int i=0;i<entidades.size();i++) {
+				if(entidades.get(i)!=null) {
+					Rectangle r1 = entidades.get(i).getRectangle();
+					for(int j=i+1;j<entidades.size();j++) {
+						if(entidades.get(j)!=null) {
+							Rectangle r2= entidades.get(j).getRectangle();
+			 				if(r1.intersects(r2)){
+								entidades.get(i).colisionar(entidades.get(j));
+							}
+			 				
+			 				if(entidades.get(i).getVida()<=0) {
+								entidadesAEliminar.add(entidades.get(i)); 
+ 								puntajeTotal+= entidades.get(i).getPuntaje();
+							}
+							if(entidades.get(j).getVida()<=0) {
+								entidadesAEliminar.add(entidades.get(j));
+								puntajeTotal+= entidades.get(j).getPuntaje();
+							}
 						}
 					}
 				}
@@ -232,14 +245,14 @@ public class Juego {
 	}
 	
 	public void manage() {
-		if(entidades.size()== 1 && jugador.getVida()>0) {
+		if(entidades.size()== 1&& jugador.getVida()>0) {
 			PrimerBoss boss=null;
 			boss = PrimerBoss.getPrimerBoss(10,200,200);
 			if(boss!=null) {
 				boss.setJuego(this);
 				entidades.add(boss);
 				miGui.add(boss.getGrafico());
-				pasoBoss=true;
+				pasoBoss= true;
 			}
 		}
 	}
@@ -297,35 +310,64 @@ public class Juego {
 		if(entidades.size()>1) {
 			toReturn=true;
 		}
-		else {
+		/*else {
 			if(!pasoBoss) {
 				return true;
 			}
-		}
+		}*/
 		return toReturn;
 	}
 	
-	public void terminarJuego() {
-		Font fuente= new Font("Arial",Font.BOLD,40);
-		JLabel partidaTerminada= new JLabel("LA PARTIDA TERMINO",JLabel.CENTER);
-		partidaTerminada.setFont(fuente);
-		partidaTerminada.setForeground(Color.WHITE);
-		
-		JPanel panel= new JPanel(new BorderLayout());
-		panel.setBounds(0, 0, miGui.getWidth(), miGui.getHeight());
-		
-		panel.setBackground(Color.BLACK);  
-		panel.add(partidaTerminada,BorderLayout.CENTER);
-		
-		
-		miGui.destruir();
-		if(jugador.getVida()>0) {
-			partidaTerminada.setText("GANASTE");
+	public int maxNiveles() {
+		return 2;
+	}
+	
+	public int nivelActual() {
+		return nivelActual;
+	}
+	
+	public void cambiarNivel() {
+		cambiandoNivel=true;
+		if(nivelActual+1<3) {
+			nivelActual++;
+			armarNivel(nivelActual);
 		}
 		else {
-			partidaTerminada.setText("PERDISTE");
+			terminarJuego=true;
 		}
-		miGui.setContentPane(panel);
+			cambiandoNivel=false;
+	}
+	
+	public boolean cambiandoNivel() {
+		return cambiandoNivel;
+	}
+	
+	
+	public boolean continuarJuego() {
+		return (jugador.getVida()>0 && !terminarJuego); 
+	}
+	
+	public void terminarJuego() {
+			Font fuente= new Font("Arial",Font.BOLD,40);
+			JLabel partidaTerminada= new JLabel("LA PARTIDA TERMINO",JLabel.CENTER);
+			partidaTerminada.setFont(fuente);
+			partidaTerminada.setForeground(Color.WHITE);
+			
+			JPanel panel= new JPanel(new BorderLayout());
+			panel.setBounds(0, 0, miGui.getWidth(), miGui.getHeight());
+			
+			panel.setBackground(Color.BLACK);  
+			panel.add(partidaTerminada,BorderLayout.CENTER);
+			
+			
+			miGui.destruir();
+			if(jugador.getVida()>0) {
+				partidaTerminada.setText("GANASTE");
+			}
+			else {
+				partidaTerminada.setText("PERDISTE");
+			}
+			miGui.setContentPane(panel);		
 	}
 	
 	

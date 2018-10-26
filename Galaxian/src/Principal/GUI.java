@@ -89,14 +89,19 @@ public class GUI extends JFrame {
         panel.add(labelVida);
         
         //Hilos
-        tiempoDisparo= new TiempoDisparo(j);
-        tiempoDisparo.start();
-        tiempo= new TiempoJugador(j);
-        tiempo.start();
         tiemp1=new ContadorTiempo(j);
-        tiemp1.start();
+        tiempo= new TiempoJugador(j);
+        tiempoDisparo= new TiempoDisparo(j);
+        tiempo.start();
+		tiemp1.start();
+        tiempoDisparo.start();
 	}
 	
+	public void activarHilos() {
+		tiempo.start();
+		tiemp1.start();
+        tiempoDisparo.start();
+	}
 
 	public void toggleKey(int keyCode, boolean isPressed){
         if(keyCode == KeyEvent.VK_RIGHT)

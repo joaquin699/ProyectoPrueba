@@ -19,8 +19,18 @@ public class TiempoJugador extends Thread {
 				}
 				elJuego.moverJugador();
 				elJuego.Update();
-				seguir= elJuego.jugadorVivo() && elJuego.hayEnemigos();
+				
+				if(elJuego.cambiandoNivel()) {
+					esperar();
+				}
+				seguir= elJuego.continuarJuego();
 			}			
 			elJuego.terminarJuego();
+		}
+		
+		private void esperar() {
+			while(elJuego.cambiandoNivel()) {
+				//Me quedo esperando hasta que se termine de cambiar el nivel de juego
+			}
 		}
 }

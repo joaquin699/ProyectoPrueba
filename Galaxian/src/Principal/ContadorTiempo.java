@@ -10,6 +10,7 @@ public class ContadorTiempo extends Thread{
 	}
 	
 	public void run() {
+		boolean cambiarNivel=false;
 		while(seguir) {
 			try {
 				Thread.sleep(100);
@@ -22,9 +23,19 @@ public class ContadorTiempo extends Thread{
 			elJuego.eliminarEntidades();
 			elJuego.accionarDisparos();
 			elJuego.agregarDisparos();
-			elJuego.manage();
+			//elJuego.manage();
 			elJuego.actualizarLabels();
-			seguir= elJuego.jugadorVivo() && elJuego.hayEnemigos();
+			
+			if(elJuego.jugadorVivo() && (elJuego.nivelActual()<=elJuego.maxNiveles())) {
+				cambiarNivel= !elJuego.hayEnemigos();
+			}
+		
+			if(cambiarNivel) {
+				elJuego.cambiarNivel();
+				cambiarNivel=false;
+			}
+			
+			seguir= elJuego.continuarJuego();
 		}
 		elJuego.terminarJuego();
 	}
