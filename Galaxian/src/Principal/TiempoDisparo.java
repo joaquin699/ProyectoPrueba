@@ -20,18 +20,8 @@ public class TiempoDisparo extends Thread  {
 			elJuego.moverDisparo();
 			elJuego.eliminarDisparos();
 			elJuego.agregarDisparos();
-			
-			if(elJuego.cambiandoNivel()) {
-				esperar();
-			}
 			seguir= elJuego.continuarJuego();
 		}
 		elJuego.terminarJuego();
-	}
-	
-	private void esperar() {
-		while(elJuego.cambiandoNivel()) {
-			//Me quedo esperando hasta que se termine de cambiar el nivel de juego
-		}
 	}
 }

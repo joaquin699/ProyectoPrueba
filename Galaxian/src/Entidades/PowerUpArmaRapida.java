@@ -5,12 +5,11 @@ import javax.swing.ImageIcon;
 import Colisionadores.Colision;
 import Colisionadores.ColisionadorPowerUp;
 import Inteligencias.InteligenciaPowerUp;
-import Principal.Juego;
 
 public class PowerUpArmaRapida extends PowerUp {
 
-	public PowerUpArmaRapida(int velocidad, int x, int y, Juego j) {
-		super(velocidad, x, y, j);
+	public PowerUpArmaRapida(int velocidad, int x, int y) {
+		super(velocidad, x, y);
 		this.vida=10;                 
 		this.setInteligencia(new InteligenciaPowerUp(this));
 		inicializarArregloImg();
@@ -27,7 +26,7 @@ public class PowerUpArmaRapida extends PowerUp {
 	}
 	public void afectar() {
 		Jugador j= this.juego.getJugador();
-		j.setArma(new ArmaRapida(j));
+		j.setArma(new ArmaRapida());
 		this.vida=0;
 	}
 

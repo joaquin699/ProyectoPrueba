@@ -50,7 +50,13 @@ public class EnemigoKamikazeMareado extends Enemigo{
 	}
 	
 	public void golpearJugador(Jugador j) {
-		j.quitarVida(damage);
+		if(!j.tieneEscudo()) {
+			j.quitarVida(damage);
+		}
+		else {
+			j.desactivarEscudo();
+		}
+		
 		this.vida=-1;
 	}
 	

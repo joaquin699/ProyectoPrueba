@@ -1,14 +1,10 @@
 package Entidades;
 
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 import Colisionadores.*;
 
 public class Jugador extends Entidad {
-	private int SHOOT_COOLDOWN_UPDATE_TIME = 10;
-	private long timeUntilShootingAvailable = 0;
 	
 	private Arma arma;
 	private boolean escudo;
@@ -32,24 +28,16 @@ public class Jugador extends Entidad {
 	
 	public Disparo crearDisparo() {
 		Disparo disp;
-		if(timeUntilShootingAvailable <=0) {
-			disp = arma.generarDisparo();
+		disp = arma.generarDisparo();
+		if(disp!=null) {
 			disp.getPos().setLocation((int)pos.getX()+(this.getGrafico().getWidth()/2 -1), (int)pos.getY()-12);
-			//disp= new DisparoJugador(5,(int)pos.getX()+(this.getGrafico().getWidth()/2 -1),(int)pos.getY()-12);
-			timeUntilShootingAvailable= SHOOT_COOLDOWN_UPDATE_TIME;
 		}
-		else {
-			disp= null;
-		}
+		
 		return disp;
 	}
 	
 	public void sumarVida(int v) {
 		this.vida+=v;
-	}
-	
-	public void setTiempoDisparo(int tiempo) {
-		SHOOT_COOLDOWN_UPDATE_TIME=tiempo;
 	}
 	
 	public void activarEscudo() {
@@ -59,12 +47,15 @@ public class Jugador extends Entidad {
 	}
 	
 	public void desactivarEscudo() {
-		this.grafico= new JLabel(this.imagen[0]);
+		this.cambiarGrafico(0);
+		this.imagenActual=0;
 		escudo=false;
 	}
 	
+	public boolean tieneEscudo() {
+		return escudo;
+	}
 	
-	//METODOS PROVISORIOS
 	public void colisionar(Entidad e) {
 		ColisionadorJugador col= new ColisionadorJugador(this);
 		e.serColisionado(col);
@@ -74,8 +65,8 @@ public class Jugador extends Entidad {
 		col.afectarJugador(this);
 	}
 	
-	 public void Update(){
-	        timeUntilShootingAvailable = timeUntilShootingAvailable - 1;
+	 public void actualizar(){
+	        arma.actualizar();
 	 }
 	 
 	 public void setArma(Arma a) {

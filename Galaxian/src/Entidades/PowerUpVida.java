@@ -1,15 +1,13 @@
 package Entidades;
 
 import javax.swing.ImageIcon;
-
 import Colisionadores.Colision;
 import Inteligencias.InteligenciaPowerUp;
-import Principal.Juego;
 
 public class PowerUpVida extends PowerUp {
 
-	public PowerUpVida(int velocidad, int x, int y, Juego j) {
-		super(velocidad, x, y, j);
+	public PowerUpVida(int velocidad, int x, int y) {
+		super(velocidad, x, y);
 		inicializarArregloImg();
 		this.setInteligencia(new InteligenciaPowerUp(this));
 		

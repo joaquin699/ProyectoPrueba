@@ -2,12 +2,22 @@ package Entidades;
 
 public class ArmaMisil extends Arma {
 	
-	public ArmaMisil(Jugador j) {
-		j.setTiempoDisparo(35);
-
+	public ArmaMisil() {
+		this.tiempoHastaProximoDisparoDisponible=0;
+		this.tiempoParaDisparar=35;
 	}
+	
 	public Disparo generarDisparo() {
-		return new DisparoMisil(5,0,0);
+		DisparoMisil disp=null;
+		if(tiempoHastaProximoDisparoDisponible<=0) {
+			disp= new DisparoMisil(5,0,0);
+			tiempoHastaProximoDisparoDisponible= tiempoParaDisparar;
+		}
+		
+		return disp;
 	}
-
+	
+	public void actualizar() {
+		tiempoHastaProximoDisparoDisponible--;
+	}
 }

@@ -4,12 +4,11 @@ import javax.swing.ImageIcon;
 
 import Colisionadores.*;
 import Inteligencias.InteligenciaPowerUp;
-import Principal.Juego;
 
 public class PowerUpEscudo extends PowerUp {
 
-	public PowerUpEscudo(int velocidad, int x, int y, Juego j) {
-		super(velocidad, x, y, j);
+	public PowerUpEscudo(int velocidad, int x, int y) {
+		super(velocidad, x, y);
 		this.vida=10;
 		this.setInteligencia(new InteligenciaPowerUp(this));
 		inicializarArregloImg();
@@ -26,6 +25,7 @@ public class PowerUpEscudo extends PowerUp {
 			this.destruir();
 		}
 	}
+	
 	public void afectar() {
 		this.juego.getJugador().activarEscudo();
 		this.vida=0;

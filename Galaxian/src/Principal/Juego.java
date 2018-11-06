@@ -27,10 +27,11 @@ public class Juego {
  	
  	private int puntajeTotal;
  	private int nivelActual;
+ 	private int maxNivel;
  	
  	private boolean moverDerecha,cambioDireccion;
  	private boolean pasoBoss;
- 	private boolean cambiandoNivel,terminarJuego=false;
+ 	private boolean terminarJuego=false;
  	
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
@@ -40,35 +41,37 @@ public class Juego {
 	
 		miGui = gui;
 		
-		entidades = new LinkedList<Entidad>();
 		entidadesAEliminar = new LinkedList<Entidad>();
 		disparos= new LinkedList<Disparo>();
 		disparosParaAgregar= new LinkedList<Disparo>();
 		
 		this.jugador=new Jugador(265,610);
 		miGui.add(jugador.getGrafico());
-		entidades.add(jugador);
 		
 		armarNivel(1);
 		nivelActual=1;
+		maxNivel=2;
 				
 		cambioDireccion= false;
 		moverDerecha=true;
 		pasoBoss=false;
-		cambiandoNivel=false;
 	}
 	
 	private void armarNivel(int nivel) {
 		nivel--;
+		LinkedList<Entidad> aux= new LinkedList<Entidad>();
+		aux.addLast(jugador);
 		for(Enemigo e: mapa[nivel].getEnemigos()) {
-			entidades.add(e);
+			aux.addLast(e);
 			miGui.add(e.getGrafico());
 		}
 		
 		for(Entidad o: mapa[nivel].getObstaculos()) {
-			entidades.add(o);
+			aux.addLast(o);
 			miGui.add(o.getGrafico());
 		}
+		
+		entidades=aux;
 	}
 	
 	public int getAnchoGui() {
@@ -222,8 +225,6 @@ public class Juego {
 		}
 	}
 
-	
-	////METODOS PROVISORIOS 2
 	public void moverJugador() {
 		if(miGui.right.isKeyDown())
            jugador.mover(1);
@@ -240,8 +241,8 @@ public class Juego {
         	
 	}
 	
-	public void Update() {
-		jugador.Update();
+	public void Actualizar() {
+		jugador.actualizar();
 	}
 	
 	public void manage() {
@@ -304,7 +305,6 @@ public class Juego {
 		return jugador.getVida()>0;
 	}
 
-
 	public boolean hayEnemigos() {
 		boolean toReturn=false;
 		if(entidades.size()>1) {
@@ -319,7 +319,7 @@ public class Juego {
 	}
 	
 	public int maxNiveles() {
-		return 2;
+		return maxNivel;
 	}
 	
 	public int nivelActual() {
@@ -327,22 +327,15 @@ public class Juego {
 	}
 	
 	public void cambiarNivel() {
-		cambiandoNivel=true;
-		if(nivelActual+1<3) {
+		if(nivelActual<maxNivel) {
 			nivelActual++;
 			armarNivel(nivelActual);
 		}
 		else {
 			terminarJuego=true;
 		}
-			cambiandoNivel=false;
 	}
-	
-	public boolean cambiandoNivel() {
-		return cambiandoNivel;
-	}
-	
-	
+
 	public boolean continuarJuego() {
 		return (jugador.getVida()>0 && !terminarJuego); 
 	}
@@ -371,6 +364,8 @@ public class Juego {
 	}
 	
 	
+	
+	///METODOS QUE HAY QUE BORRAAAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
 	public LinkedList<Entidad>getListaEntidades(){
 		return entidades;
