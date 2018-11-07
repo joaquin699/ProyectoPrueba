@@ -28,7 +28,7 @@ public class PowerUpVida extends PowerUp {
 	}
 	
 	public void afectar() {
-		this.juego.getJugador().sumarVida(150);
+		this.juego.getJugador().sumarVida(50);
 		this.vida=0;
 		
 	}
