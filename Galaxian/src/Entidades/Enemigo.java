@@ -1,5 +1,7 @@
 package Entidades;
 
+import java.util.Random;
+
 import Colisionadores.ColisionadorEnemigo;
 import Inteligencias.Inteligencia;
 import Principal.Juego;
@@ -29,6 +31,7 @@ public abstract class Enemigo extends Entidad {
 	
 	}
 	
+	
 	public void serDetenido(Inteligencia i) {
 		ColisionadorEnemigo col= new ColisionadorEnemigo(this);
 		col.cambiarInteligencia(i);
@@ -36,6 +39,19 @@ public abstract class Enemigo extends Entidad {
 	
 	public Arma getArma() {
 		return null;
+	}
+	
+	public void destruir() {
+		//Random r = new Random();
+		this.vida=-1;
+		juego.getGui().remove(grafico);
+		PowerUp p = new PowerUpEscudo(7,pos.x,pos.y);
+		p.setJuego(juego);
+		
+	 	
+		//SE LLAMA MUCHAS VECES
+		System.out.println("Se elimino 1 enemigo");
+		//juego.addEntidad(p);
 	}
 	
 }

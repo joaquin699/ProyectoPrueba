@@ -7,8 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import java.awt.Rectangle;
-
 import Principal.GUI;
 import Entidades.*;
 import java.awt.*;
@@ -21,6 +19,7 @@ public class Juego {
 	private Jugador jugador;
 	
  	private LinkedList<Entidad> entidades;
+ 	private LinkedList<Entidad>entidadesNuevas;
  	private LinkedList<Entidad> entidadesAEliminar;
  	private LinkedList<Disparo> disparos;
  	private LinkedList<Disparo> disparosParaAgregar;
@@ -44,6 +43,7 @@ public class Juego {
 		entidadesAEliminar = new LinkedList<Entidad>();
 		disparos= new LinkedList<Disparo>();
 		disparosParaAgregar= new LinkedList<Disparo>();
+		entidadesNuevas = new LinkedList<Entidad>();
 		
 		this.jugador=new Jugador(265,610);
 		miGui.add(jugador.getGrafico());
@@ -51,6 +51,7 @@ public class Juego {
 		armarNivel(1);
 		nivelActual=1;
 		maxNivel=2;
+		
 				
 		cambioDireccion= false;
 		moverDerecha=true;
@@ -128,12 +129,16 @@ public class Juego {
 		synchronized(entidades) {
 			synchronized(entidadesAEliminar) {
 				if(!(entidades.isEmpty()&&entidadesAEliminar.isEmpty())){
+					
 					for(int i=0;i<entidadesAEliminar.size();i++) {
+						
 						elemento= entidadesAEliminar.get(i);
 						entidades.remove(elemento);
 						elemento.destruir();
 						entidadesAEliminar.remove(elemento);
+						
 					}
+					
 				}
 			}
 		}
@@ -198,7 +203,16 @@ public class Juego {
 	}
 	
 	public void addEntidad(Entidad e) {
-		entidades.add(e);
+		entidadesNuevas.add(e);
+	}
+	
+	public void agregarEntidades() {
+		synchronized(entidades) {
+			for(Entidad e: entidadesNuevas) {
+				miGui.add(e.getGrafico());
+				entidades.add(e);
+			}
+		}
 	}
 	
 	//METODOS PROVISORIOS
@@ -373,6 +387,10 @@ public class Juego {
 	
 	public LinkedList<Disparo> getListaDisparos(){
 		return disparos;
+	}
+
+	public Container getGui() {
+		return miGui;
 	}
 	
 }

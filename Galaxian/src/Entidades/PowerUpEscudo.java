@@ -22,7 +22,8 @@ public class PowerUpEscudo extends PowerUp {
 		this.inteligencia.mover();
 		if(this.pos.getY()>710) {
 			this.vida=-1;
-			this.destruir();
+			//this.destruir();
+			System.out.println("Escudo paso el limite");
 		}
 	}
 	
