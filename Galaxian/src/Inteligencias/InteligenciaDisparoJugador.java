@@ -1,6 +1,6 @@
 package Inteligencias;
 
-import Entidades.*;
+import Disparos.Disparo;
 
 public class InteligenciaDisparoJugador extends Inteligencia{
 	Disparo disp;

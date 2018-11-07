@@ -2,24 +2,24 @@ package Entidades;
 
 import javax.swing.ImageIcon;
 
+import Armas.Arma;
+import Armas.ArmaEnemigo;
 import Colisionadores.Colision;
 import Colisionadores.ColisionadorEnemigo;
-import Inteligencias.InteligenciaEnemigoPierdeArma;
+import Inteligencias.InteligenciaEnemigoBasicoPierdeArma;
 
 public class EnemigoPierdeArma extends Enemigo {
-
+	
 	protected Arma arma;
-	private int damage;
 	
 	public EnemigoPierdeArma(int velocidad, int x, int y) {
 		super(velocidad,x,y);
 		this.vida= 100;
 		
-		damage= 60;
 		inicializarArregloImg();
 		this.setPuntaje(7);
-		this.setInteligencia(new InteligenciaEnemigoPierdeArma(this));
-		this.arma = new ArmaEnemigo();
+		this.setInteligencia(new InteligenciaEnemigoBasicoPierdeArma(this));
+		this.arma = new ArmaEnemigo(this);
 	}
 	
 	private void inicializarArregloImg() {
@@ -47,18 +47,7 @@ public class EnemigoPierdeArma extends Enemigo {
 	}
 	
 	public void golpearObstaculo(Obstaculo o) {
-		o.quitarVida(damage);
-		this.vida=-1;
-	}
-	
-	public void golpearJugador(Jugador j) {
-		if(!j.tieneEscudo()) {
-			j.quitarVida(damage);
-		}
-		else {
-			j.desactivarEscudo();
-		}
-		
+		o.quitarVida(20);
 		this.vida=-1;
 	}
 	

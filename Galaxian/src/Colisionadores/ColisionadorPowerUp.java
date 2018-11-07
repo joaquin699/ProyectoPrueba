@@ -1,7 +1,7 @@
 package Colisionadores;
 
 import Entidades.Jugador;
-import Entidades.PowerUp;
+import PowerUps.PowerUp;
 
 public class ColisionadorPowerUp extends Colision {
 	
@@ -13,6 +13,5 @@ public class ColisionadorPowerUp extends Colision {
 
 	public void afectarJugador(Jugador j) {
 		pu.afectar();
-		pu.destruir();
 	}
 }

@@ -1,6 +1,6 @@
 package Colisionadores;
 
-import Entidades.*;
+import Disparos.Disparo;
 
 public class ColisionadorDisparo extends Colision{
 	Disparo disp;

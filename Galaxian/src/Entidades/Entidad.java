@@ -5,6 +5,7 @@ import java.awt.*;
 
 import Colisionadores.*;
 import Inteligencias.*;
+import PowerUps.PowerUp;
 
 public abstract class Entidad {
 	
@@ -82,12 +83,6 @@ public abstract class Entidad {
 		return toReturn;
 	}
 	
-	public void destruir() {
-		grafico.setIcon(null);
-		vida=-1;
-		
-	}
-	
 	public void setPuntaje(int x) {
 		puntaje=x;
 	}
@@ -129,6 +124,8 @@ public abstract class Entidad {
 		
 	}
 	
+	public void destruir() {
+	}
 	
 	public void serDetenido(Inteligencia i){
 		

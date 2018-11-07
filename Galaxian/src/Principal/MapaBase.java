@@ -2,6 +2,7 @@ package Principal;
 
 import java.util.LinkedList;
 import Entidades.*;
+import PowerUps.*;
 
 public class MapaBase extends Mapa {
 	
@@ -11,21 +12,32 @@ public class MapaBase extends Mapa {
 		int x= 50;
 		int y= 50;
 		
-		for(int i=0;i<5;i++){
+		for(int i=0;i<3;i++){
 			EnemigoBase enem= new EnemigoBase(7,x,y);
 			enem.setJuego(j);
 			enemigos.add(enem);
 			x+= 70;
 		}
 		
-		PowerUp premio=new PowerUpEscudo(7,250,250);
+		for(int i=0;i<2;i++){
+			Enemigo enem= new EnemigoBase(7,x,y);
+			enem.setJuego(j);
+			enemigos.add(enem);
+			x+= 70;
+		}
+		
+		PowerUp premio=new PowerUpArmaMejorada(7,250,250);
+		premio.setJuego(j);
+		obstaculos.add(premio);
+		
+		premio= new PowerUpEscudo(7,250,500);
 		premio.setJuego(j);
 		obstaculos.add(premio);
 		
 		
-		EnemigoPierdeArma enem= new EnemigoPierdeArma(7,x,y);
+		/*EnemigoPierdeArma enem= new EnemigoPierdeArma(7,x,y);
 		enem.setJuego(j);
-		enemigos.add(enem);
+		enemigos.add(enem);*/
 		
 		
 		

@@ -13,21 +13,21 @@ public class ContadorTiempo extends Thread{
 		boolean cambiarNivel=false;
 		while(seguir) {
 			try {
-				Thread.sleep(70);
+				Thread.sleep(100);
 			}
 			catch(InterruptedException e) {
 				e.printStackTrace();
 			}
 			elJuego.mover();
 			elJuego.detectarColisiones();
+			elJuego.eliminarEntidades();
 			elJuego.accionarDisparos();
 			elJuego.agregarDisparos();
-			elJuego.agregarEntidades();
-			elJuego.eliminarEntidades();
-
 			//elJuego.manage();
 			elJuego.actualizarLabels();
 			
+			
+			//Me fijo si tengo que cambiar de nivel
 			if(elJuego.jugadorVivo() && (elJuego.nivelActual()<=elJuego.maxNiveles())) {
 				cambiarNivel= !elJuego.hayEnemigos();
 			}
@@ -37,8 +37,8 @@ public class ContadorTiempo extends Thread{
 				cambiarNivel=false;
 			}
 			
+			
 			seguir= elJuego.continuarJuego();
-			//System.out.println(elJuego.getListaEntidades().size());
 		}
 		elJuego.terminarJuego();
 	}

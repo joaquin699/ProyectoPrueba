@@ -7,6 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Disparos.Disparo;
+
+import java.awt.Rectangle;
+
 import Principal.GUI;
 import Entidades.*;
 import java.awt.*;
@@ -19,8 +23,8 @@ public class Juego {
 	private Jugador jugador;
 	
  	private LinkedList<Entidad> entidades;
- 	private LinkedList<Entidad>entidadesNuevas;
  	private LinkedList<Entidad> entidadesAEliminar;
+ 	private LinkedList<Entidad> entidadesParaAgregar;
  	private LinkedList<Disparo> disparos;
  	private LinkedList<Disparo> disparosParaAgregar;
  	
@@ -41,17 +45,16 @@ public class Juego {
 		miGui = gui;
 		
 		entidadesAEliminar = new LinkedList<Entidad>();
+		entidadesParaAgregar= new LinkedList<Entidad>();
 		disparos= new LinkedList<Disparo>();
 		disparosParaAgregar= new LinkedList<Disparo>();
-		entidadesNuevas = new LinkedList<Entidad>();
 		
 		this.jugador=new Jugador(265,610);
 		miGui.add(jugador.getGrafico());
 		
 		armarNivel(1);
 		nivelActual=1;
-		maxNivel=2;
-		
+		maxNivel=1;
 				
 		cambioDireccion= false;
 		moverDerecha=true;
@@ -108,15 +111,6 @@ public class Juego {
 			 				if(r1.intersects(r2)){
 								entidades.get(i).colisionar(entidades.get(j));
 							}
-			 				
-			 				if(entidades.get(i).getVida()<=0) {
-								entidadesAEliminar.add(entidades.get(i)); 
- 								puntajeTotal+= entidades.get(i).getPuntaje();
-							}
-							if(entidades.get(j).getVida()<=0) {
-								entidadesAEliminar.add(entidades.get(j));
-								puntajeTotal+= entidades.get(j).getPuntaje();
-							}
 						}
 					}
 				}
@@ -125,25 +119,38 @@ public class Juego {
 	}
 	
 	public void eliminarEntidades() {
-		Entidad elemento;
+		quitarEntidades();
+		
+		LinkedList<Entidad> entidadesEliminar= entidadesAEliminar;
+		entidadesAEliminar= new LinkedList<Entidad>();
+		
 		synchronized(entidades) {
-			synchronized(entidadesAEliminar) {
-				if(!(entidades.isEmpty()&&entidadesAEliminar.isEmpty())){
-					
-					for(int i=0;i<entidadesAEliminar.size();i++) {
-						
-						elemento= entidadesAEliminar.get(i);
-						entidades.remove(elemento);
-						elemento.destruir();
-						entidadesAEliminar.remove(elemento);
-						
-					}
+			if(entidades.size()>0){
+				for(Entidad e: entidadesEliminar) {
+					entidades.remove(e);
+					e.destruir();
+					this.destruir(e);
 					
 				}
 			}
 		}
+		
 	}
 	
+	private void destruir(Entidad d) {
+		miGui.remove(d.getGrafico());
+		miGui.repaint();
+	}
+
+	private void quitarEntidades() {
+		for(Entidad e: entidades) {
+			if(e.getVida()<=0) {
+				entidadesAEliminar.add(e);
+				puntajeTotal+= e.getPuntaje();
+			}
+		}
+	}
+
 	public int getPuntajeTotal() {
 		return puntajeTotal;
 	}
@@ -202,19 +209,21 @@ public class Juego {
 		return jugador.getGrafico().getWidth();
 	}
 	
-	public void addEntidad(Entidad e) {
-		entidadesNuevas.add(e);
+	public synchronized void addEntidad(Entidad e) {
+		entidadesParaAgregar.add(e);
 	}
 	
 	public void agregarEntidades() {
+		LinkedList<Entidad> aux= entidadesParaAgregar;
+		entidadesParaAgregar= new LinkedList<Entidad>();
+		
 		synchronized(entidades) {
-			for(Entidad e: entidadesNuevas) {
+			for(Entidad e : aux) {
+				entidades.addLast(e);
 				miGui.add(e.getGrafico());
-				entidades.add(e);
 			}
 		}
 	}
-	
 	//METODOS PROVISORIOS
 	
 	public void moverDisparo() {
@@ -226,14 +235,13 @@ public class Juego {
 	}
 
 	public void eliminarDisparos() {
-		synchronized(entidades) {
-			synchronized(disparos) {
-				for(int i=0;i<disparos.size();i++) {
-					if(disparos.get(i).getVida()<=0) {
-						entidades.remove(disparos.get(i));
-						disparos.get(i).destruir();
-						disparos.remove(i);
-					}
+		Disparo d;
+		synchronized(disparos) {
+			for(int i=0;i<disparos.size();i++) {
+				d= disparos.get(i);
+				if(d.getVida()<=0) {
+					entidadesAEliminar.add(d);
+					disparos.remove(d);
 				}
 			}
 		}
@@ -293,24 +301,18 @@ public class Juego {
 	}
 
 	public void addDisparo(Disparo d) {
-		synchronized(disparosParaAgregar) {
-			disparosParaAgregar.addLast(d);
-		}
+		disparosParaAgregar.addLast(d);
 	}
 	
-	public synchronized void agregarDisparos() {
-		Disparo d;
-		synchronized(entidades) {
-			synchronized(disparos) {
-				if(disparosParaAgregar.size()>0) {			
-					for(int i=0;i<disparosParaAgregar.size();i++) {
-						d= disparosParaAgregar.get(i);
-						entidades.add(d);
-						disparos.addLast(d);
-						miGui.add(d.getGrafico());
-						disparosParaAgregar.remove(d); 
-					}
-				}
+	public synchronized void agregarDisparos() {	
+		LinkedList<Disparo> disparoAux= disparosParaAgregar;
+		disparosParaAgregar= new LinkedList<Disparo>();
+		
+		synchronized(disparos) {
+			for(Disparo d : disparoAux) {
+				entidadesParaAgregar.addLast(d);
+				disparos.addLast(d);
+				miGui.add(d.getGrafico());
 			}
 		}
 	}
@@ -387,10 +389,6 @@ public class Juego {
 	
 	public LinkedList<Disparo> getListaDisparos(){
 		return disparos;
-	}
-
-	public Container getGui() {
-		return miGui;
 	}
 	
 }

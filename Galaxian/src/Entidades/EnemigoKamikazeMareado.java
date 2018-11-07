@@ -1,41 +1,32 @@
 package Entidades;
 
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 
 import Colisionadores.Colision;
 import Colisionadores.ColisionadorEnemigo;
-import Inteligencias.InteligenciaEnemigoConArma;
-import Inteligencias.InteligenciaMareado;
+import Inteligencias.InteligenciaKamikazeMareado;
 
 public class EnemigoKamikazeMareado extends Enemigo{
 
 	private int damage;
-	private boolean cambieInteligencia;
 	
 	public EnemigoKamikazeMareado(int velocidad, int x, int y) {
 		super(velocidad,x,y);
 		
 		this.vida= 200;
 		damage=80;
-		this.cambieInteligencia = false;
 		
 		inicializarArregloImg();
 		this.setPuntaje(300);
-		this.setInteligencia(new InteligenciaEnemigoConArma(this));
+		this.setInteligencia(new InteligenciaKamikazeMareado(this));
 	}
+	
 	private void inicializarArregloImg() {
 		this.imagen[0]= new ImageIcon(this.getClass().getResource("/img/Webp.net-gifmaker (3).gif"));
 	}
 	
 	public void mover() {
-		Random r = new Random();
-		if(!cambieInteligencia&&r.nextInt(60)==5) {
-		this.setInteligencia(new InteligenciaMareado(this));
-			cambieInteligencia=true;
-		}
-		this.inteligencia.mover();
+		inteligencia.mover();
 		
 	}
 	
@@ -50,13 +41,7 @@ public class EnemigoKamikazeMareado extends Enemigo{
 	}
 	
 	public void golpearJugador(Jugador j) {
-		if(!j.tieneEscudo()) {
-			j.quitarVida(damage);
-		}
-		else {
-			j.desactivarEscudo();
-		}
-		
+		j.recibirDañoKamikaze(damage);
 		this.vida=-1;
 	}
 	

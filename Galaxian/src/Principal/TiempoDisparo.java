@@ -20,6 +20,7 @@ public class TiempoDisparo extends Thread  {
 			elJuego.moverDisparo();
 			elJuego.eliminarDisparos();
 			elJuego.agregarDisparos();
+			elJuego.agregarEntidades();
 			seguir= elJuego.continuarJuego();
 		}
 		elJuego.terminarJuego();
