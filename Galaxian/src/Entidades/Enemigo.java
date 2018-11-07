@@ -41,10 +41,13 @@ public abstract class Enemigo extends Entidad {
 	}
 	
 	public void destruir() {
-		PowerUp escudo= new PowerUpEscudo(7,pos.x,pos.y);
-		escudo.setJuego(juego);
+		GeneradorPowerUp generador = new GeneradorPowerUp(this.juego);
+		PowerUp p = generador.getPowerUpAleatorio();
+		if(p!=null) {
+			p.getPos().setLocation(this.pos.x, this.pos.y);
+			juego.addEntidad(p);
+		}
 		
-		juego.addEntidad(escudo);
 	}
 	
 }
