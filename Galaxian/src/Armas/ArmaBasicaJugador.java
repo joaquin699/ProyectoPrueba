@@ -7,8 +7,8 @@ import Disparos.DisparoJugador;
 public class ArmaBasicaJugador extends Arma {
 	
 	
-	public ArmaBasicaJugador(Entidad e) {
-		super(e);
+	public ArmaBasicaJugador(Jugador j) {
+		super(j);
 		this.tiempoHastaProximoDisparoDisponible=0;
 		this.tiempoParaDisparar=10;
 	}

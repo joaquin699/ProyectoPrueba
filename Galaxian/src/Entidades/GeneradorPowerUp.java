@@ -9,10 +9,12 @@ public class GeneradorPowerUp {
 	
 	private Random r;
 	private Juego juego;
+	private int cantidadPowerUpTiempo;
 	
 	public GeneradorPowerUp(Juego j) {
 		r= new Random();
 		this.juego=j;
+		cantidadPowerUpTiempo=0;
 	}
 	
 	public PowerUp getPowerUpAleatorio() {
@@ -45,7 +47,10 @@ public class GeneradorPowerUp {
 			p= new PowerUpMisil(7,0,0);
 			break;
 		case 4:
-			p=new PowerUpTiempo(7,0,0);
+			if(cantidadPowerUpTiempo==0) {
+				p=new PowerUpTiempo(7,0,0);
+				cantidadPowerUpTiempo=1;
+			}
 			break;
 		case 5:
 			p=new PowerUpVida(7,0,0);

@@ -6,10 +6,14 @@ import Entidades.*;
 public abstract class Arma {
 	protected int tiempoParaDisparar;
 	protected long tiempoHastaProximoDisparoDisponible;
-	protected Entidad propietario;
+	protected int cantBalas;
+	protected Jugador propietario;
 	
-	public Arma(Entidad e) {
+	public Arma(Jugador e) {
 		propietario=e;
+	}
+	public Arma() {
+		
 	}
 	
 	public abstract Disparo generarDisparo();

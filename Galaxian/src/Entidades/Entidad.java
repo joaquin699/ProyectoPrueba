@@ -103,6 +103,8 @@ public abstract class Entidad {
 		
 	}
 	
+	
+	
 	public Point getPos() {
 		return pos;
 	}

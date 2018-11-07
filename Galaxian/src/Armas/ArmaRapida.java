@@ -9,7 +9,8 @@ public class ArmaRapida extends Arma {
 	public ArmaRapida(Jugador j) {
 		super(j);
 		this.tiempoHastaProximoDisparoDisponible=0;
-		this.tiempoParaDisparar=5;
+		this.tiempoParaDisparar=7;
+		this.cantBalas=80;
 	}
 	
 	public Disparo generarDisparo() {
@@ -17,6 +18,10 @@ public class ArmaRapida extends Arma {
 		if(tiempoHastaProximoDisparoDisponible<=0) {
 			disp= new DisparoRapido(5,0,0);
 			tiempoHastaProximoDisparoDisponible= tiempoParaDisparar;
+			cantBalas--;
+		}
+		if(cantBalas==0) {
+			propietario.setArma(new ArmaBasicaJugador(propietario));
 		}
 		return disp;
 	}

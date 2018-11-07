@@ -17,7 +17,7 @@ public class EnemigoBase extends Enemigo{
 		inicializarArregloImg();
 		this.setPuntaje(7);
 		this.setInteligencia(new InteligenciaEnemigoConArma(this));
-		this.arma = new ArmaEnemigo(this);
+		this.arma = new ArmaEnemigo();
 	}
 	
 	private void inicializarArregloImg() {
