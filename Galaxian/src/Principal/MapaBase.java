@@ -12,7 +12,16 @@ public class MapaBase extends Mapa {
 		int x= 50;
 		int y= 50;
 		
-		for(int k=0;k<5;k++) {
+		for(int i =0;i<5;i++) {
+			EnemigoBase enem= new EnemigoBase(7,x,y);
+			enem.setJuego(j);
+			enemigos.add(enem);
+			y+= 50;
+		}
+		y=70;
+		x+=50;
+		
+		for(int k=0;k<4;k++) {
 			for(int i=0;i<5;i++){
 				EnemigoBase enem= new EnemigoBase(7,x,y);
 				enem.setJuego(j);
@@ -20,7 +29,7 @@ public class MapaBase extends Mapa {
 				x+= 70;
 			}
 			x=50;
-			y+=70;
+			y+=50;
 		}
 		
 		

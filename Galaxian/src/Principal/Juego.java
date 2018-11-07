@@ -75,6 +75,7 @@ public class Juego {
 			miGui.add(o.getGrafico());
 		}
 		
+		
 		entidades=aux;
 	}
 	
@@ -143,7 +144,8 @@ public class Juego {
 	}
 
 	private void quitarEntidades() {
-		for(Entidad e: entidades) {
+		LinkedList<Entidad> lista = (LinkedList<Entidad>) entidades.clone();
+		for(Entidad e: lista) {
 			if(e.getVida()<=0) {
 				entidadesAEliminar.add(e);
 				puntajeTotal+= e.getPuntaje();
