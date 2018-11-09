@@ -12,6 +12,8 @@ public class ObstaculoRompeJugador extends Obstaculo{
 		inicializarArregloImg();
 		
 		this.vida=400;
+		this.vida= 50;
+		this.vidaInicial=vida;
 	}
 	
 	private void inicializarArregloImg() {
@@ -20,7 +22,7 @@ public class ObstaculoRompeJugador extends Obstaculo{
 	
 	//METODOS PROVISORIOS
 	public void serColisionado(Colision col) {
-		col.afectarObstaculo(this);
+		col.afectarObstaculoRompeJugador(this);
 }
 
 	public void colisionar(Entidad e) {

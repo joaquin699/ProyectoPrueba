@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import Disparos.Disparo;
 
@@ -14,6 +13,7 @@ import java.awt.Rectangle;
 import Principal.GUI;
 import Entidades.*;
 import java.awt.*;
+
 public class Juego {
 	//ATRIBUTOS
 	private GUI miGui;
@@ -39,8 +39,10 @@ public class Juego {
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
 		this.mapa=new Mapa[4];
-		mapa[0]= new MapaBase(this);
+		mapa[0]= new MapaNivel1(this);
 		mapa[1]= new MapaNivel2(this);
+		mapa[2]= new MapaNivel3(this);
+		mapa[3]= new MapaNivel4(this);
 	
 		miGui = gui;
 		
@@ -54,7 +56,7 @@ public class Juego {
 		
 		armarNivel(1);
 		nivelActual=1;
-		maxNivel=1;
+		maxNivel=4;
 				
 		cambioDireccion= false;
 		moverDerecha=true;
@@ -74,7 +76,6 @@ public class Juego {
 			aux.addLast(o);
 			miGui.add(o.getGrafico());
 		}
-		
 		
 		entidades=aux;
 	}
@@ -144,7 +145,9 @@ public class Juego {
 	}
 
 	private void quitarEntidades() {
-		LinkedList<Entidad> lista = (LinkedList<Entidad>) entidades.clone();
+		@SuppressWarnings("unchecked")
+		LinkedList<Entidad> lista= (LinkedList<Entidad>) entidades.clone();
+		
 		for(Entidad e: lista) {
 			if(e.getVida()<=0) {
 				entidadesAEliminar.add(e);
@@ -250,13 +253,13 @@ public class Juego {
 	}
 
 	public void moverJugador() {
-		if(miGui.right.isKeyDown())
+		if(miGui.getRight().isKeyDown())
            jugador.mover(1);
 
-        if(miGui.left.isKeyDown())
+        if(miGui.getLeft().isKeyDown())
         	jugador.mover(0);
 
-        if(miGui.space.isKeyDown()) {
+        if(miGui.getSpace().isKeyDown()) {
         	Disparo d= jugador.crearDisparo();
     		if(d!=null) {
     			this.addDisparo(d);
@@ -359,7 +362,7 @@ public class Juego {
 	}
 	
 	public void terminarJuego() {
-			Font fuente= new Font("Arial",Font.BOLD,40);
+			/*Font fuente= new Font("Arial",Font.BOLD,40);
 			JLabel partidaTerminada= new JLabel("LA PARTIDA TERMINO",JLabel.CENTER);
 			partidaTerminada.setFont(fuente);
 			partidaTerminada.setForeground(Color.WHITE);
@@ -369,16 +372,24 @@ public class Juego {
 			
 			panel.setBackground(Color.BLACK);  
 			panel.add(partidaTerminada,BorderLayout.CENTER);
+			*/
 			
-			
-			miGui.destruir();
+			/*miGui.destruir();
 			if(jugador.getVida()>0) {
 				partidaTerminada.setText("GANASTE");
 			}
 			else {
 				partidaTerminada.setText("PERDISTE");
 			}
-			miGui.setContentPane(panel);		
+			miGui.setContentPane(panel);
+			miGui.agregarBoton();*/
+		
+		if(jugador.getVida()>0) {
+			miGui.terminar(0);
+		}
+		else {
+			miGui.terminar(1);
+		}
 	}
 	
 	

@@ -10,29 +10,30 @@ public class GeneradorPowerUp {
 	private Random r;
 	private Juego juego;
 	private int cantidadPowerUpTiempo;
+	private int probabilidad;
 	
-	public GeneradorPowerUp(Juego j) {
+	public GeneradorPowerUp(Juego j,int p) {
 		r= new Random();
 		this.juego=j;
 		cantidadPowerUpTiempo=0;
+		probabilidad= p;
 	}
 	
 	public PowerUp getPowerUpAleatorio() {
-		int num = r.nextInt(6);
+		int num = r.nextInt(probabilidad);
 		PowerUp p;
-		switch(num) {
-		case 0:
+		if(num==1) {
 			p=getPowerUpRandom();
-			break;
-		default:
+		}
+		else {
 			p=null;
 		}
 		return p;
 	}
 	
 	private PowerUp getPowerUpRandom() {
+		int num=r.nextInt(6);
 		PowerUp p=new PowerUpEscudo(12,0,0);
-		int num=r.nextInt(5);
 		switch(num) {
 		case 0:
 			p=new PowerUpEscudo(12,0,0);

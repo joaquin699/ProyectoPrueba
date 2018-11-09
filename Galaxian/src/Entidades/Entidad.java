@@ -5,7 +5,6 @@ import java.awt.*;
 
 import Colisionadores.*;
 import Inteligencias.*;
-import PowerUps.PowerUp;
 
 public abstract class Entidad {
 	
@@ -14,6 +13,7 @@ public abstract class Entidad {
 	//ATRIBUTOS
 	protected int velocidad;
 	protected int vida;
+	protected int vidaInicial;
 	protected JLabel grafico;
 	protected Icon []imagen;
 	protected Point pos;
@@ -103,12 +103,17 @@ public abstract class Entidad {
 		
 	}
 	
-	
+	public int getVidaInicial() {
+		return vidaInicial;
+	}
 	
 	public Point getPos() {
 		return pos;
 	}
 
+	public int getVelocidad() {
+		return velocidad;
+	}
 	//METODOS PROVISORIOS
 	public int getVida() {
 		return vida;

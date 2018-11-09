@@ -12,8 +12,7 @@ import Inteligencias.InteligenciaPowerUp;
 public class PowerUpArmaRapida extends PowerUp {
 
 	public PowerUpArmaRapida(int velocidad, int x, int y) {
-		super(velocidad, x, y);
-		this.vida=10;                 
+		super(velocidad, x, y);              
 		this.setInteligencia(new InteligenciaPowerUp(this));
 		inicializarArregloImg();
 	}

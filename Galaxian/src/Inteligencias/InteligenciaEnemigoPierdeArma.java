@@ -10,17 +10,14 @@ import Entidades.Enemigo;
 public class InteligenciaEnemigoPierdeArma extends InteligenciaEnemigo {
 	
 	private Random r;
-	private int vidaParaCambiar;
 	
 	public InteligenciaEnemigoPierdeArma(Enemigo enem){
 		this.enemigo=enem;
 		r= new Random();
-		vidaParaCambiar= (int) enemigo.getVida()*20/100;
-
 	}
 	
 	public void disparar() {
-		if (enemigo.getVida()>vidaParaCambiar) {
+		if (enemigo.getVida()>enemigo.getVidaInicial()*0.2) {
 			if(r.nextInt(10)==5) {
 				Arma arma= enemigo.getArma();
 				if(arma!=null) {

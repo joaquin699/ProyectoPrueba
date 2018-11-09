@@ -17,9 +17,12 @@ public class PrimerBoss extends Enemigo {
 	
 	private PrimerBoss(int velocidad,int x, int y) {
 		super(velocidad,x,y);
-		this.vida= 100;
+		
+		this.vida= 500;
+		this.vidaInicial=vida;
+		this.puntaje=1000;
+		
 		inicializarArregloImg();
-		this.setPuntaje(7);
 		this.setInteligencia(new InteligenciaEnemigoConArma(this));
 		
 		r= new Random();

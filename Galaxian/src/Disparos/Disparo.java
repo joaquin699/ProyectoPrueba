@@ -11,7 +11,8 @@ public abstract class Disparo extends Entidad{
 	public Disparo(int velocidad,int x,int y) {
 		super(velocidad,x,y);
 		
-		vida= 10;	
+		vida= 10;
+		vidaInicial= vida;
 	}
 	
 	

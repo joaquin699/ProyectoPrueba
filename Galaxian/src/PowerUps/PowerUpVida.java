@@ -11,9 +11,6 @@ public class PowerUpVida extends PowerUp {
 		super(velocidad, x, y);
 		inicializarArregloImg();
 		this.setInteligencia(new InteligenciaPowerUp(this));
-		
-		this.vida=10;
-
 	}
 	
 	public void mover() {
