@@ -23,12 +23,12 @@ public class ContadorTiempo extends Thread{
 			elJuego.eliminarEntidades();
 			elJuego.accionarDisparos();
 			elJuego.agregarDisparos();
-			//elJuego.manage();
+			///elJuego.manage();
 			elJuego.actualizarLabels();
 			
 			
 			//Me fijo si tengo que cambiar de nivel
-			if(elJuego.jugadorVivo() && (elJuego.nivelActual()<=elJuego.maxNiveles())) {
+			if(elJuego.jugadorVivo()) {
 				cambiarNivel= !elJuego.hayEnemigos();
 			}
 		
