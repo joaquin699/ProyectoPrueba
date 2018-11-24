@@ -1,12 +1,12 @@
+
 package Disparos;
 
 import javax.swing.ImageIcon;
 
-import Colisionadores.*;
 import Entidades.*;
 import Inteligencias.InteligenciaDisparoJugador;
 
-public class DisparoMisil extends Disparo {
+public class DisparoMisil extends DisparoJugador {
 	public DisparoMisil(int velocidad,int x,int y) {
 		super(velocidad,x,y);
 		
@@ -24,15 +24,6 @@ public class DisparoMisil extends Disparo {
 		if(this.pos.getY()<-5) {
 			this.vida=-1;
 		}
-	}
-	
-	public void colisionar(Entidad e) {
-		ColisionadorDisparo col= new ColisionadorDisparo(this);
-		e.serColisionado(col);
-	}
-	
-	public void serColisionado(Colision col) {
-		col.afectarDisparo(this);
 	}
 	
 	public void golpearEnemigo(Enemigo e) {

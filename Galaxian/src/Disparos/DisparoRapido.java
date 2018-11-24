@@ -2,14 +2,11 @@ package Disparos;
 
 import javax.swing.ImageIcon;
 
-import Colisionadores.Colision;
-import Colisionadores.ColisionadorDisparo;
-import Entidades.Enemigo;
-import Entidades.Entidad;
+import Entidades.*;
 import Entidades.Obstaculo;
 import Inteligencias.InteligenciaDisparoJugador;
 
-public class DisparoRapido extends Disparo {
+public class DisparoRapido extends DisparoJugador {
 	
 	private int damage;
 	
@@ -25,15 +22,6 @@ public class DisparoRapido extends Disparo {
 	
 	private void inicializarArregloImg() {
 		this.imagen[0]= new ImageIcon(this.getClass().getResource("/img/disparoChico.png"));
-	}
-
-	public void serColisionado(Colision col) {
-		col.afectarDisparo(this);
-	}
-
-	public void colisionar(Entidad e) {
-		ColisionadorDisparo col= new ColisionadorDisparo(this);
-		e.serColisionado(col);
 	}
 	
 	public void golpearEnemigo(Enemigo e) {
