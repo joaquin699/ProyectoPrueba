@@ -44,6 +44,12 @@ public abstract class Enemigo extends Entidad {
 		return null;
 	}
 	
+	public void quitarVida(int v) {
+		super.quitarVida(v);
+		// ACA VA VERIFICAR CAMBIO
+		inteligencia.verificarCambio();
+	}
+	
 	public void destruir() {
 		if(powerUpAlDestruir!=null) {
 			powerUpAlDestruir.getPos().setLocation(this.pos.x, this.pos.y);
