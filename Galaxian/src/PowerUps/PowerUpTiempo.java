@@ -53,5 +53,9 @@ public class PowerUpTiempo extends PowerUp {
 		e.serColisionado(col);
 		
 	}
+	
+	public static void setInstanciaNull() {
+		instancia=null;
+	}
 		
 }

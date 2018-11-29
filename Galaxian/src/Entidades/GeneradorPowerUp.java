@@ -15,6 +15,7 @@ public class GeneradorPowerUp {
 		r= new Random();
 		this.juego=j;
 		probabilidad= p;
+		PowerUpTiempo.setInstanciaNull();
 	}
 	
 	public PowerUp getPowerUpAleatorio() {
