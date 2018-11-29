@@ -21,6 +21,7 @@ public abstract class Entidad {
 	protected int puntaje;
 	protected int imagenActual;
 	
+	
 	//CONSTRUCTOR
 	protected Entidad(int velocidad,int x,int y) {
 		this.velocidad= velocidad;
@@ -138,3 +139,5 @@ public abstract class Entidad {
 	}
 	
 }
+
+

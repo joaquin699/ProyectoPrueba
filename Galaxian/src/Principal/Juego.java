@@ -29,12 +29,9 @@ public class Juego {
  	private LinkedList<Disparo> disparosParaAgregar;
  	
  	private int puntajeTotal;
- 	private int nivelActual;
- 	private int maxNivel;
  	
  	private boolean moverDerecha,cambioDireccion;
  	private boolean terminarJuego=false;
- 	private boolean pasoBoss;
  	
  	//CONSTRUCTOR
 	public Juego(GUI gui) {	
@@ -54,7 +51,6 @@ public class Juego {
 
 		cambioDireccion= false;
 		moverDerecha=true;
-		pasoBoss= false;
 	}
 	
 	private void armarNivel() {
@@ -263,19 +259,7 @@ public class Juego {
 	public void Actualizar() {
 		jugador.actualizar();
 	}
-	
-	public void manage() {
-		if(nivelActual==maxNivel && entidades.size()==1 && jugador.getVida()>0) {
-			PrimerBoss boss=null;
-			boss = PrimerBoss.getPrimerBoss(10,200,200);
-			if(boss!=null) {
-				boss.setJuego(this);
-				addEntidad(boss);
-				pasoBoss=true;
-			}
-		}
-	}
-	
+		
 	public void setCambiarDireccion(boolean dir) {
 		cambioDireccion= dir;
 	}
@@ -351,4 +335,5 @@ public class Juego {
 	public LinkedList<Entidad> getListaEntidades(){
 		return entidades;
 	}	
+
 }

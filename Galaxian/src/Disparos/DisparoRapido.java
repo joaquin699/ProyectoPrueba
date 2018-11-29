@@ -8,8 +8,6 @@ import Inteligencias.InteligenciaDisparoJugador;
 
 public class DisparoRapido extends DisparoJugador {
 	
-	private int damage;
-	
 	public DisparoRapido(int velocidad, int x, int y) {
 		super(velocidad, x, y);
 		

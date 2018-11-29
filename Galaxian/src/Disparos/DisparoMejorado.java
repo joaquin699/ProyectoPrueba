@@ -6,9 +6,7 @@ import Entidades.*;
 import Inteligencias.InteligenciaDisparoJugador;
 
 public class DisparoMejorado extends DisparoJugador {
-	
-	private int damage;
-	
+
 	public DisparoMejorado(int velocidad,int x,int y) {
 		super(velocidad,x,y);
 		

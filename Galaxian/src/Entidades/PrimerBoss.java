@@ -1,21 +1,17 @@
 package Entidades;
 
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 
 import Armas.*;
 import Colisionadores.Colision;
 import Colisionadores.ColisionadorEnemigo;
-import Disparos.DisparoEnemigo;
-import Inteligencias.InteligenciaEnemigoConArma;
+import Inteligencias.*;
 
 public class PrimerBoss extends Enemigo {
 	
-	private static PrimerBoss primerBoss;
 	private ArmaBoss arma;
 	
-	private PrimerBoss(int velocidad,int x, int y) {
+	public PrimerBoss(int velocidad,int x, int y) {
 		super(velocidad,x,y);
 		
 		this.vida= 500;
@@ -25,25 +21,15 @@ public class PrimerBoss extends Enemigo {
 		arma= new ArmaBoss(this);
 		
 		inicializarArregloImg();
-		this.setInteligencia(new InteligenciaEnemigoConArma(this));
+		this.setInteligencia(new InteligenciaBoss(this));
+		this.puntaje= 1000;
 		
-	}
-
-	public static PrimerBoss getPrimerBoss(int velo,int x,int y) {
-		if(primerBoss==null) {
-			primerBoss= new PrimerBoss(velo,x,y);
-			return primerBoss;
-		}
-		else {
-			return null;
-		}
-		
-
 	}
 	
 	private void inicializarArregloImg() {
 		this.imagen[0]= new ImageIcon(this.getClass().getResource("/img/boss.png"));
 	}
+	
 	public void mover() {
 		this.inteligencia.mover();
 	}
@@ -60,8 +46,7 @@ public class PrimerBoss extends Enemigo {
 	public ArmaBoss getArmaBoss() {
 		return arma;
 	}
-	
-	
+		
 	public void disparar() {
 		inteligencia.disparar();
 	}

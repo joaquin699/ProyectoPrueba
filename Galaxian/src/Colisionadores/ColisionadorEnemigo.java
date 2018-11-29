@@ -2,7 +2,6 @@ package Colisionadores;
 
 import Disparos.Disparo;
 import Entidades.*;
-import Inteligencias.*;
 import PowerUps.PowerUp;
 
 public class ColisionadorEnemigo extends Colision{

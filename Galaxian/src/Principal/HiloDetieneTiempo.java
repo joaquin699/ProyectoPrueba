@@ -36,7 +36,6 @@ public class HiloDetieneTiempo extends Thread {
 		for(Entidad e: listaEntidades) {
 			e.setInteligencia(mapeo.get(e));
 		}
-		//termino con la instancia del power up asi se puede crear otro
-		//PowerUpTiempo.setInstanciaNull();
+		
 	}
 }

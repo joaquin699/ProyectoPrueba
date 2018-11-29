@@ -43,6 +43,6 @@ public class MapaNivel4 extends Mapa {
 	}
 	
 	public Mapa getSiguienteNivel() {
-		return null;
+		return new MapaBoss(this.juego);
 	}
 }

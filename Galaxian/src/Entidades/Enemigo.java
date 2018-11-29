@@ -1,8 +1,6 @@
 package Entidades;
 
 import Armas.Arma;
-import Colisionadores.ColisionadorEnemigo;
-import Inteligencias.Inteligencia;
 import PowerUps.*;
 import Principal.Juego;
 import Principal.VisitorDetieneTiempo;
@@ -49,7 +47,6 @@ public abstract class Enemigo extends Entidad {
 	public void destruir() {
 		if(powerUpAlDestruir!=null) {
 			powerUpAlDestruir.getPos().setLocation(this.pos.x, this.pos.y);
-			System.out.println("puse pu tiempo");
 			juego.addEntidad(powerUpAlDestruir);
 		}
 		

@@ -20,7 +20,6 @@ public class GeneradorPowerUp {
 	public PowerUp getPowerUpAleatorio() {
 		int num = r.nextInt(probabilidad);
 		PowerUp p;
-		num=1;
 		if(num==1) {
 			p=getPowerUpRandom();
 		}
@@ -32,8 +31,7 @@ public class GeneradorPowerUp {
 	
 	private PowerUp getPowerUpRandom() {
 		int num=r.nextInt(6);
-		PowerUp p=new PowerUpVida(12,0,0);
-		num=4;
+		PowerUp p=null;
 		switch(num) {
 		case 0:
 			p=new PowerUpEscudo(12,0,0);
@@ -49,6 +47,9 @@ public class GeneradorPowerUp {
 			break;
 		case 4:
 			p=PowerUpTiempo.getInstancia(12,0,0);
+			if(p==null) {
+				p=new PowerUpVida(12,0,0);	
+			}
 			break;
 		case 5:
 			p=new PowerUpVida(12,0,0);

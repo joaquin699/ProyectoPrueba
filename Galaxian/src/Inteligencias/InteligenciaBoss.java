@@ -15,10 +15,11 @@ public class InteligenciaBoss extends InteligenciaEnemigoConArma {
 	public InteligenciaBoss(PrimerBoss enem) {
 		super(enem);
 		r= new Random();
+		boss= enem;
 	}
 	
 	public void disparar() {
-		if(r.nextInt(40)==5) {
+		if(r.nextInt(25)==5) {
 			ArmaBoss arma= boss.getArmaBoss();
 			if(arma!=null) {
 				for(Disparo d: boss.getArmaBoss().generarDisparoBoss())
