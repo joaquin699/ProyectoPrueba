@@ -40,8 +40,6 @@ public class ColisionadorEnemigo extends Colision{
 		
 	}
 	
-	public void cambiarInteligencia(Inteligencia i) {
-		enem.setInteligencia(i);
-	}
+
 	
 }

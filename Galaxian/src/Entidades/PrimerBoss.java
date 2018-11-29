@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+import Armas.*;
 import Colisionadores.Colision;
 import Colisionadores.ColisionadorEnemigo;
 import Disparos.DisparoEnemigo;
@@ -11,9 +12,8 @@ import Inteligencias.InteligenciaEnemigoConArma;
 
 public class PrimerBoss extends Enemigo {
 	
-	
-	private Random r;
 	private static PrimerBoss primerBoss;
+	private ArmaBoss arma;
 	
 	private PrimerBoss(int velocidad,int x, int y) {
 		super(velocidad,x,y);
@@ -22,10 +22,11 @@ public class PrimerBoss extends Enemigo {
 		this.vidaInicial=vida;
 		this.puntaje=1000;
 		
+		arma= new ArmaBoss(this);
+		
 		inicializarArregloImg();
 		this.setInteligencia(new InteligenciaEnemigoConArma(this));
 		
-		r= new Random();
 	}
 
 	public static PrimerBoss getPrimerBoss(int velo,int x,int y) {
@@ -56,14 +57,13 @@ public class PrimerBoss extends Enemigo {
 		e.serColisionado(col);
 	}
 	
+	public ArmaBoss getArmaBoss() {
+		return arma;
+	}
+	
 	
 	public void disparar() {
-		if(r.nextInt(10)==5) {
-			DisparoEnemigo d1 =new DisparoEnemigo(5,(int)pos.getX()+(this.getGrafico().getWidth()/2 -5),(int)pos.getY()+55);
-			DisparoEnemigo d2 =new DisparoEnemigo(5,(int)pos.getX()+(this.getGrafico().getWidth()/2 +5),(int)pos.getY()+60);
-			juego.addDisparo(d1);
-			juego.addDisparo(d2);
-		}
+		inteligencia.disparar();
 	}
 }
 

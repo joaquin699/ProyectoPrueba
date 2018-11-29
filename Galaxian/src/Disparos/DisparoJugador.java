@@ -50,5 +50,11 @@ public class DisparoJugador extends Disparo{
 		o.quitarVida(damage);
 		vida=-1;
 	}
+
+	@Override
+	public void golpearJugador(Jugador j) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

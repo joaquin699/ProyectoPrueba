@@ -50,5 +50,11 @@ public class DisparoEnemigo extends Disparo {
 
 	public void golpearObstaculoJugador(Obstaculo o) {
 	}
+
+	@Override
+	public void golpearEnemigo(Enemigo enem) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -5,6 +5,7 @@ import Colisionadores.ColisionadorEnemigo;
 import Inteligencias.Inteligencia;
 import PowerUps.*;
 import Principal.Juego;
+import Principal.VisitorDetieneTiempo;
 
 public abstract class Enemigo extends Entidad {
 	protected Juego juego;
@@ -37,9 +38,8 @@ public abstract class Enemigo extends Entidad {
 	
 	}
 	
-	public void serDetenido(Inteligencia i) {
-		ColisionadorEnemigo col= new ColisionadorEnemigo(this);
-		col.cambiarInteligencia(i);
+	public void serDetenido(VisitorDetieneTiempo v) {
+		v.detenerEnemigo(this);
 	}
 	
 	public Arma getArma() {
@@ -49,6 +49,7 @@ public abstract class Enemigo extends Entidad {
 	public void destruir() {
 		if(powerUpAlDestruir!=null) {
 			powerUpAlDestruir.getPos().setLocation(this.pos.x, this.pos.y);
+			System.out.println("puse pu tiempo");
 			juego.addEntidad(powerUpAlDestruir);
 		}
 		
